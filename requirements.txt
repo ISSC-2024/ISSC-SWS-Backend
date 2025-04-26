@@ -1,0 +1,10 @@
+fastapi
+tortoise-orm
+asyncmy
+pydantic
+httpx
+pytest
+pytest-asyncio
+aerich
+python-dotenv
+uvicorn

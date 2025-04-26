@@ -1,0 +1,188 @@
+{
+  "dataset_name": "化工行业工业时序数据集(秒级采样)",
+  "version": "1.0.0",
+  "created_date": "2025-03-25",
+  "description": "包含100个监测点的化工行业时序数据，每10秒一次采样，共8640个时间片段，覆盖24小时",
+  "sampling_info": {
+    "sampling_frequency": "10秒/次",
+    "start_time": "2025-03-01 00:00:00",
+    "end_time": "2025-03-01 23:59:50",
+    "time_points": 8640,
+    "duration_hours": 24.0,
+    "total_records": 864000
+  },
+  "areas": [
+    {
+      "code": "RMS",
+      "name": "原料储存区",
+      "points_count": 20,
+      "description": "原料储存区，监测温度、压力、流量和液位"
+    },
+    {
+      "code": "REA",
+      "name": "反应器区",
+      "points_count": 25,
+      "description": "反应器区，监测温度、压力、流量和液位"
+    },
+    {
+      "code": "SEP",
+      "name": "分离提纯区",
+      "points_count": 20,
+      "description": "分离提纯区，监测温度、压力、流量和液位"
+    },
+    {
+      "code": "PRO",
+      "name": "成品储存区",
+      "points_count": 15,
+      "description": "成品储存区，监测温度、压力、流量和液位"
+    },
+    {
+      "code": "UTL",
+      "name": "公用工程区",
+      "points_count": 20,
+      "description": "公用工程区，监测温度、压力、流量和液位"
+    }
+  ],
+  "sensors": {
+    "temperature": {
+      "unit": "°C",
+      "normal_ranges": {
+        "RMS": [
+          15,
+          35
+        ],
+        "REA": [
+          80,
+          150
+        ],
+        "SEP": [
+          50,
+          120
+        ],
+        "PRO": [
+          15,
+          35
+        ],
+        "UTL": [
+          20,
+          90
+        ]
+      },
+      "precision": "±0.5°C",
+      "response_time": "1-3秒"
+    },
+    "pressure": {
+      "unit": "MPa",
+      "normal_ranges": {
+        "RMS": [
+          0.1,
+          0.5
+        ],
+        "REA": [
+          0.5,
+          3.0
+        ],
+        "SEP": [
+          0.3,
+          2.0
+        ],
+        "PRO": [
+          0.1,
+          0.5
+        ],
+        "UTL": [
+          0.2,
+          1.5
+        ]
+      },
+      "precision": "±0.01MPa",
+      "response_time": "小于1秒"
+    },
+    "flow_rate": {
+      "unit": "m³/h",
+      "normal_ranges": {
+        "RMS": [
+          5,
+          50
+        ],
+        "REA": [
+          20,
+          100
+        ],
+        "SEP": [
+          15,
+          90
+        ],
+        "PRO": [
+          5,
+          60
+        ],
+        "UTL": [
+          30,
+          150
+        ]
+      },
+      "precision": "±0.5m³/h",
+      "response_time": "1-2秒"
+    },
+    "level": {
+      "unit": "%",
+      "normal_ranges": {
+        "RMS": [
+          20,
+          80
+        ],
+        "REA": [
+          30,
+          60
+        ],
+        "SEP": [
+          20,
+          70
+        ],
+        "PRO": [
+          20,
+          80
+        ],
+        "UTL": [
+          30,
+          70
+        ]
+      },
+      "precision": "±1%",
+      "response_time": "2-5秒"
+    },
+    "gas_concentration": {
+      "unit": "ppm",
+      "gas_types": [
+        "H₂S",
+        "NH₃",
+        "CO"
+      ],
+      "normal_ranges": {
+        "H₂S": [
+          0,
+          10
+        ],
+        "NH₃": [
+          0,
+          25
+        ],
+        "CO": [
+          0,
+          50
+        ]
+      },
+      "precision": "±1ppm",
+      "response_time": "2-4秒"
+    }
+  },
+  "anomaly_info": {
+    "anomaly_rate": "约0.25%的数据点包含异常"
+  },
+  "risk_levels": {
+    "safe": "安全 - 所有参数均在正常范围内",
+    "warning": "警告 - 一个或多个参数接近危险阈值",
+    "danger": "危险 - 一个或多个参数超出安全阈值或多个参数处于警告状态"
+  }
+}
