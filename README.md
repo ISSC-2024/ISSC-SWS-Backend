@@ -51,8 +51,8 @@
 
 ### 环境要求
 
-- Python 3.8+
 - MySQL 8.0+
+- 其余的交给 uv 管理
 
 ### 安装步骤
 
@@ -63,22 +63,32 @@
    cd ISSC-SWS-Backend
    ```
 
-2. 创建并激活虚拟环境 **（可选）**
+2. 安装 uv 管理工具
 
    ```bash
-   python -m venv venv
-   source venv/bin/activate  # Linux/Mac
-   # 或
-   venv\Scripts\activate  # Windows
+   pip install uv
+   # 可以指定安装路径，然后将uv的bin子文件夹添加到系统环境变量中（D:/uv/bin）
+   pip install uv --target=D:/uv
    ```
 
-3. 安装依赖
+   **或者**
 
    ```bash
-   pip install -r requirements.txt
+   # On macOS and Linux.
+   curl -LsSf https://astral.sh/uv/install.sh | sh
+   # On Windows.
+   powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
    ```
 
-4. 配置环境变量
+由于 uv 会自动检测 python 版本并安装，建议在系统变量中添加**UV_PYTHON_INSTALL_DIR**，设置 uv 的 python 安装路径，以免占用 C 盘空间。
+
+1. 安装依赖
+
+   ```bash
+   uv sync
+   ```
+
+2. 配置环境变量
    创建`.env`文件，设置以下变量：
 
    ```
@@ -88,19 +98,19 @@
    ACCESS_TOKEN_EXPIRE_MINUTES=30
    ```
 
-5. 执行数据库迁移
+3. 执行数据库迁移
 
    ```bash
    aerich init-db
    ```
 
-6. 启动服务
+4. 启动服务
 
    ```bash
    uvicorn app.main:app --reload
    ```
 
-7. 访问 API 文档：http://localhost:8000/docs
+5. 访问 API 文档：http://localhost:8000/docs
 
 ## 开发指南
 
