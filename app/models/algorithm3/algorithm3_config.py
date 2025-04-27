@@ -44,11 +44,12 @@ class Algorithm3Config(Model):
             'xgboost',
             'lightGBM',
             'TabNet'
-        ]
+        ],
+        null=False
     )
 
     # 学习率，所有算法都需要
-    learning_rate = fields.FloatField(description="学习率")
+    learning_rate = fields.FloatField(description="学习率", null=False)
 
     # 最大深度，只有xgboost和lightGBM算法需要
     max_depth = fields.IntField(

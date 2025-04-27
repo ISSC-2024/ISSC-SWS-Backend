@@ -1,31 +1,27 @@
 import os
 from fastapi import APIRouter, BackgroundTasks, HTTPException, Query, Path, Depends
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 from app.models.algorithm2.algorithm2_config import Algorithm2Config
 from app.models.algorithm2.algorithm2_result import Algorithm2Result
-from app.schemas.algorithm2.algorithm2_config import Algorithm2ConfigBase, Algorithm2ConfigCreate
+from app.schemas.algorithm2.algorithm2_config import Algorithm2ConfigBase, Algorithm2ConfigCreate, Algorithm2ConfigResponse
 from app.schemas.algorithm2.algorithm2_result import Algorithm2ResultResponse
 from app.utils.csv_importer import import_csv_to_model
 
 router = APIRouter()
 
 
-async def get_config_from_params(config_params: Algorithm2ConfigBase) -> Algorithm2Config:
+async def get_config_from_params(config_params: Algorithm2ConfigBase) -> Optional[Algorithm2Config]:
     """
     根据配置参数获取对应的配置对象
+
+    返回:
+        Algorithm2Config 或 None (如果未找到配置)
     """
-    config = await Algorithm2Config.get_or_none(
+    return await Algorithm2Config.get_or_none(
         tree_count=config_params.tree_count,
         max_depth=config_params.max_depth,
         sensitivity=config_params.sensitivity
     )
-
-    if not config:
-        raise HTTPException(
-            status_code=404,
-            detail=f"未找到配置：tree_count={config_params.tree_count}, max_depth={config_params.max_depth}, sensitivity={config_params.sensitivity}"
-        )
-    return config
 
 
 @router.get("/configs", response_model=int)
@@ -36,6 +32,13 @@ async def get_config_id(
     获取配置ID - 根据算法参数查找配置
     """
     config = await get_config_from_params(config_params)
+
+    if not config:
+        raise HTTPException(
+            status_code=404,
+            detail=f"未找到配置：tree_count={config_params.tree_count}, max_depth={config_params.max_depth}, sensitivity={config_params.sensitivity}"
+        )
+
     return config.config_id
 
 
@@ -74,6 +77,12 @@ async def get_results_by_params(
     # 查找匹配参数的配置
     config = await get_config_from_params(config_params)
 
+    if not config:
+        raise HTTPException(
+            status_code=404,
+            detail=f"未找到配置：tree_count={config_params.tree_count}, max_depth={config_params.max_depth}, sensitivity={config_params.sensitivity}"
+        )
+
     # 使用找到的配置ID查询结果
     query_filters = {"config_id": config.config_id}
     if area_code:
@@ -90,10 +99,46 @@ async def get_results_by_params(
     return results
 
 
+@router.post("/configs", response_model=Algorithm2ConfigResponse)
+async def create_config(
+    config: Algorithm2ConfigCreate,
+
+):
+    """
+    创建新配置 - 根据算法参数创建配置
+    """
+    # 将config对象转换为配置参数
+    config_params = Algorithm2ConfigResponse(
+        tree_count=config.tree_count,
+        max_depth=config.max_depth,
+        sensitivity=config.sensitivity
+    )
+
+    # 查找现有配置
+    db_config = await get_config_from_params(config_params)
+
+    # 如果配置不存在，创建新配置
+    if not db_config:
+        # db_config = await Algorithm2Config.create(
+        #     tree_count=config.tree_count,
+        #     max_depth=config.max_depth,
+        #     sensitivity=config.sensitivity
+        # )
+        # 直接返回传入的配置参数
+        return config_params
+
+    raise HTTPException(
+        status_code=400,
+        detail=f"配置已存在：tree_count={config.tree_count}, max_depth={config.max_depth}, sensitivity={config.sensitivity}"
+    )
+
+
 @router.post("/configs/import-results", response_model=Dict[str, Any])
 async def create_config_and_import_results(
     config: Algorithm2ConfigCreate,
-    background_tasks: BackgroundTasks
+    background_tasks: BackgroundTasks,
+    csv_name: str = Query("monitoring_points_weights.csv",
+                          description="CSV文件名")
 ):
     """
     创建或查找配置并导入CSV数据
@@ -101,12 +146,15 @@ async def create_config_and_import_results(
     1. 根据传入的配置参数查找或创建配置
     2. 将CSV数据导入到algorithm2_result表中
     """
-    # 1. 查找或创建配置
-    db_config = await Algorithm2Config.get_or_none(
+    # 将config对象转换为配置参数
+    config_params = Algorithm2ConfigBase(
         tree_count=config.tree_count,
         max_depth=config.max_depth,
         sensitivity=config.sensitivity
     )
+
+    # 1. 查找现有配置
+    db_config = await get_config_from_params(config_params)
 
     # 如果配置不存在，创建新配置
     if not db_config:
@@ -124,7 +172,7 @@ async def create_config_and_import_results(
     current_dir = os.path.dirname(os.path.abspath(__file__))
     project_root = os.path.abspath(os.path.join(current_dir, '..', '..', '..'))
     csv_path = os.path.join(project_root, 'app', 'data',
-                            'algorithm2', 'monitoring_points_weights.csv')
+                            'algorithm2', csv_name)
 
     # 3. 检查CSV文件是否存在
     if not os.path.exists(csv_path):
