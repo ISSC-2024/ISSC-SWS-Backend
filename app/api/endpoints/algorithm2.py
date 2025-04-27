@@ -93,9 +93,7 @@ async def get_results_by_params(
     return results
 
 
-router.post("/configs/import-results", response_model=Dict[str, Any])
-
-
+@router.post("/configs/import-results", response_model=Dict[str, Any])
 async def create_config_and_import_results(
     config: Algorithm2ConfigCreate,
     background_tasks: BackgroundTasks
@@ -140,12 +138,22 @@ async def create_config_and_import_results(
 
     # 4. 导入CSV数据
     # 使用后台任务异步导入，避免阻塞API响应
-    background_tasks.add_task(
-        import_csv_to_model,
+    # background_tasks.add_task(
+    #     import_csv_to_model,
+    #     csv_path=csv_path,
+    #     model_class=Algorithm2Result,
+    #     config_id=db_config.config_id,
+    #     config_field_name="config_id",
+    #     batch_size=100,
+    #     encoding='utf-8'
+    # )
+
+    # 直接调用导入函数
+    await import_csv_to_model(
         csv_path=csv_path,
         model_class=Algorithm2Result,
         config_id=db_config.config_id,
-        config_field_name="config_id",
+        config_field_name="config",
         batch_size=100,
         encoding='utf-8'
     )

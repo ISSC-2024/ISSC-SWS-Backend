@@ -7,8 +7,8 @@ class Algorithm2Result(Model):
     # 主键，自动递增
     result_id = fields.BigIntField(pk=True)
     # 外键，指向 Algorithm1Config 表，建立索引
-    config_id = fields.ForeignKeyField(
-        'models.Algorithm2Config', related_name='results', index=True)
+    config = fields.ForeignKeyField(
+        'models.Algorithm2Config', related_name='results', index=True, field_name='config_id')
 
     point_id = fields.CharField(max_length=10, description="监测点（传感器）ID")
     area_code = fields.CharField(max_length=5, description="区域编码")

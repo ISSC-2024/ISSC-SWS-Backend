@@ -1,9 +1,7 @@
 import csv
 import logging
-import inspect
 from typing import Type, List, Dict, Any, Optional, Union
 from tortoise.models import Model
-from tortoise.fields import Field
 from pathlib import Path
 
 logger = logging.getLogger(__name__)
@@ -13,7 +11,7 @@ async def import_csv_to_model(
     csv_path: str,
     model_class: Type[Model],
     config_id: Optional[int] = None,
-    config_field_name: str = "config_id",
+    config_field_name: str = "config",
     batch_size: int = 100,
     encoding: str = 'utf-8',
     custom_mapping: Optional[Dict[str, str]] = None
@@ -25,7 +23,7 @@ async def import_csv_to_model(
         csv_path: CSV文件路径
         model_class: Tortoise ORM模型类
         config_id: 可选的配置ID(外键)，如果提供则会设置到相应字段
-        config_field_name: 配置ID字段名称，默认为"config_id"
+        config_field_name: 默认为"config"，这里应当是关系对象名，而非ID字段名
         batch_size: 批量插入的记录数量
         encoding: CSV文件编码
         custom_mapping: 自定义字段映射，覆盖自动检测的映射
@@ -41,10 +39,26 @@ async def import_csv_to_model(
         return {"success": False, "error": error_msg}
 
     # 获取模型所有字段
-    model_fields = {}
-    for name, field in model_class.__dict__.items():
-        if isinstance(field, Field):
-            model_fields[name] = field
+    model_fields = model_class._meta.fields_map
+    model_field_names = list(model_fields.keys())
+    logger.info(f"模型字段: {model_field_names}")
+
+    # 查找外键字段信息
+    fk_field_obj = model_fields.get(config_field_name)
+    fk_db_field = None
+
+    if fk_field_obj and hasattr(fk_field_obj, 'source_field'):
+        fk_db_field = fk_field_obj.source_field
+        logger.info(f"找到外键数据库字段名: {fk_db_field}")
+
+    # 获取模型的数据库字段映射
+    db_to_model_fields = {}
+    if hasattr(model_class._meta, 'fields_db_projection'):
+        # 使用正确的字段投影属性
+        fields_db_projection = model_class._meta.fields_db_projection
+        # 创建反向映射: 数据库字段名 -> 模型字段名
+        db_to_model_fields = {v: k for k, v in fields_db_projection.items()}
+        logger.info(f"数据库字段映射: {db_to_model_fields}")
 
     # 统计信息
     stats = {
@@ -86,8 +100,12 @@ async def import_csv_to_model(
                     continue
 
                 # 检查CSV列名是否直接匹配模型字段
-                if csv_col in model_fields:
+                if csv_col in model_field_names:
                     field_mapping[csv_col] = csv_col
+                # 检查是否匹配数据库字段名
+                elif csv_col in db_to_model_fields:
+                    model_field = db_to_model_fields[csv_col]
+                    field_mapping[csv_col] = model_field
 
             # 如果没有找到可映射的字段
             if not field_mapping:
@@ -95,6 +113,7 @@ async def import_csv_to_model(
 
             # 记录使用的字段映射
             stats["field_mapping"] = field_mapping
+            logger.info(f"字段映射: {field_mapping}")
 
             # 重置文件指针，重新开始读取
             csvfile.seek(0)
@@ -114,14 +133,6 @@ async def import_csv_to_model(
 
                 # 构建模型字段数据
                 record_data = {}
-
-                # 设置配置ID（如果提供）
-                if config_id is not None:
-                    # 处理外键字段命名约定
-                    if config_field_name.endswith("_id"):
-                        record_data[config_field_name] = config_id
-                    else:
-                        record_data[f"{config_field_name}_id"] = config_id
 
                 # 根据映射填充数据
                 for csv_field, model_field in field_mapping.items():
@@ -156,22 +167,43 @@ async def import_csv_to_model(
                                 logger.warning(error)
 
                 # 如果没有有效字段，跳过此行
-                if not any(key != f"{config_field_name}_id" for key in record_data.keys()):
+                if not record_data:
                     stats["failed"] += 1
                     continue
 
                 batch.append(record_data)
 
-                # 达到批处理大小时执行批量插入
+                # 达到批处理大小时执行插入
                 if len(batch) >= batch_size:
                     try:
-                        await model_class.bulk_create(
-                            [model_class(**item) for item in batch]
-                        )
-                        stats["imported"] += len(batch)
+                        # 使用单个创建而不是批量创建，更可靠处理外键
+                        successful = 0
+                        for item in batch:
+                            try:
+                                # 排除可能的外键字段，因为我们会单独处理
+                                create_data = {
+                                    k: v for k, v in item.items() if k != config_field_name}
+
+                                # 如果有配置ID，设置外键
+                                if config_id is not None:
+                                    # 使用正确的字段名设置外键ID
+                                    create_data[f"{config_field_name}_id"] = config_id
+
+                                # 创建记录
+                                await model_class.create(**create_data)
+                                successful += 1
+                            except Exception as e:
+                                error_idx = stats["total"] - \
+                                    len(batch) + batch.index(item) + 1
+                                error = f"记录 {error_idx} 导入失败: {str(e)}, 数据: {item}"
+                                stats["errors"].append(error)
+                                logger.error(error)
+
+                        stats["imported"] += successful
+                        stats["failed"] += (len(batch) - successful)
                     except Exception as e:
                         stats["failed"] += len(batch)
-                        error = f"批量导入失败 (记录 {stats['total'] - len(batch) + 1} - {stats['total']}): {str(e)}"
+                        error = f"批量处理失败: {str(e)}"
                         stats["errors"].append(error)
                         logger.error(error)
 
@@ -181,13 +213,34 @@ async def import_csv_to_model(
             # 处理剩余的记录
             if batch:
                 try:
-                    await model_class.bulk_create(
-                        [model_class(**item) for item in batch]
-                    )
-                    stats["imported"] += len(batch)
+                    # 使用单个创建而不是批量创建
+                    successful = 0
+                    for item in batch:
+                        try:
+                            # 排除可能的外键字段，单独处理
+                            create_data = {
+                                k: v for k, v in item.items() if k != config_field_name}
+
+                            # 如果有配置ID，设置外键
+                            if config_id is not None:
+                                # 使用正确的字段名设置外键ID
+                                create_data[f"{config_field_name}_id"] = config_id
+
+                            # 创建记录
+                            await model_class.create(**create_data)
+                            successful += 1
+                        except Exception as e:
+                            error_idx = stats["total"] - \
+                                len(batch) + batch.index(item) + 1
+                            error = f"记录 {error_idx} 导入失败: {str(e)}, 数据: {item}"
+                            stats["errors"].append(error)
+                            logger.error(error)
+
+                    stats["imported"] += successful
+                    stats["failed"] += (len(batch) - successful)
                 except Exception as e:
                     stats["failed"] += len(batch)
-                    error = f"批量导入失败 (剩余记录): {str(e)}"
+                    error = f"批量处理失败: {str(e)}"
                     stats["errors"].append(error)
                     logger.error(error)
 
