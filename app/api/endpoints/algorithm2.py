@@ -1,32 +1,41 @@
 import os
-from fastapi import APIRouter, BackgroundTasks, HTTPException, Query, Path
+from fastapi import APIRouter, BackgroundTasks, HTTPException, Query, Path, Depends
 from typing import Any, Dict, List
 from app.models.algorithm2.algorithm2_config import Algorithm2Config
 from app.models.algorithm2.algorithm2_result import Algorithm2Result
-from app.schemas.algorithm2.algorithm2_config import Algorithm2ConfigCreate
+from app.schemas.algorithm2.algorithm2_config import Algorithm2ConfigBase, Algorithm2ConfigCreate
 from app.schemas.algorithm2.algorithm2_result import Algorithm2ResultResponse
 from app.utils.csv_importer import import_csv_to_model
 
 router = APIRouter()
 
 
+async def get_config_from_params(config_params: Algorithm2ConfigBase) -> Algorithm2Config:
+    """
+    根据配置参数获取对应的配置对象
+    """
+    config = await Algorithm2Config.get_or_none(
+        tree_count=config_params.tree_count,
+        max_depth=config_params.max_depth,
+        sensitivity=config_params.sensitivity
+    )
+
+    if not config:
+        raise HTTPException(
+            status_code=404,
+            detail=f"未找到配置：tree_count={config_params.tree_count}, max_depth={config_params.max_depth}, sensitivity={config_params.sensitivity}"
+        )
+    return config
+
+
 @router.get("/configs", response_model=int)
 async def get_config_id(
-    tree_count: int = Query(..., description="决策树数量", ge=1),
-    max_depth: int = Query(..., description="树最大深度", ge=2),
-    sensitivity: float = Query(..., description="偏离敏感度", gt=0.0)
+    config_params: Algorithm2ConfigBase = Depends()
 ):
     """
     获取配置ID - 根据算法参数查找配置
     """
-    config = await Algorithm2Config.get_or_none(
-        tree_count=tree_count,
-        max_depth=max_depth,
-        sensitivity=sensitivity
-    )
-
-    if not config:
-        raise HTTPException(status_code=404, detail="未找到配置")
+    config = await get_config_from_params(config_params)
     return config.config_id
 
 
@@ -56,26 +65,14 @@ async def get_results(
 
 @router.get("/results", response_model=List[Algorithm2ResultResponse])
 async def get_results_by_params(
-    tree_count: int = Query(..., description="决策树数量", ge=1),
-    max_depth: int = Query(..., description="树最大深度", ge=2),
-    sensitivity: float = Query(..., description="偏离敏感度", gt=0.0),
+    config_params: Algorithm2ConfigBase = Depends(),
     area_code: str = Query(None, description="区域编码")
 ):
     """
     获取算法结果 - 根据算法参数组合查询
     """
     # 查找匹配参数的配置
-    config = await Algorithm2Config.get_or_none(
-        tree_count=tree_count,
-        max_depth=max_depth,
-        sensitivity=sensitivity
-    )
-
-    if not config:
-        raise HTTPException(
-            status_code=404,
-            detail=f"未找到配置：tree_count={tree_count}, max_depth={max_depth}, sensitivity={sensitivity}"
-        )
+    config = await get_config_from_params(config_params)
 
     # 使用找到的配置ID查询结果
     query_filters = {"config_id": config.config_id}
@@ -137,17 +134,6 @@ async def create_config_and_import_results(
         )
 
     # 4. 导入CSV数据
-    # 使用后台任务异步导入，避免阻塞API响应
-    # background_tasks.add_task(
-    #     import_csv_to_model,
-    #     csv_path=csv_path,
-    #     model_class=Algorithm2Result,
-    #     config_id=db_config.config_id,
-    #     config_field_name="config_id",
-    #     batch_size=100,
-    #     encoding='utf-8'
-    # )
-
     # 直接调用导入函数
     await import_csv_to_model(
         csv_path=csv_path,
