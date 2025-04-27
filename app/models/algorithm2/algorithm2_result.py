@@ -6,7 +6,7 @@ from tortoise.indexes import Index
 class Algorithm2Result(Model):
     # 主键，自动递增
     result_id = fields.BigIntField(pk=True)
-    # 外键，指向 Algorithm1Config 表，建立索引
+    # 外键，指向 Algorithm2Config 表，建立索引
     config = fields.ForeignKeyField(
         'models.Algorithm2Config', related_name='results', index=True, field_name='config_id')
 
