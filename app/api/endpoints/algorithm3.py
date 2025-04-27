@@ -145,13 +145,17 @@ async def create_config(
 async def create_config_and_import_results(
     config: Algorithm3ConfigCreate,
     background_tasks: BackgroundTasks,
-    csv_name: str = Query("predicted_results.csv", description="CSV文件名")
+    csv_name: str = Query("predicted_results.csv",
+                          description="CSV文件名，默认为predicted_results.csv")
 ):
     """
     创建或查找配置并导入CSV数据
 
     1. 根据传入的配置参数查找或创建配置
     2. 将CSV数据导入到algorithm3_result表中
+
+    CSV文件路径规则：
+    app/data/algorithm3/{算法名}/{算法名}_model_{learning_rate}_{max_depth或max_epochs}/{csv_name}
     """
     # 将config转换为ConfigBase对象，用于查询
     config_params = Algorithm3ConfigBase(
@@ -189,8 +193,30 @@ async def create_config_and_import_results(
     # 获取项目根目录，当前文件在app/api/endpoints
     current_dir = os.path.dirname(os.path.abspath(__file__))
     project_root = os.path.abspath(os.path.join(current_dir, '..', '..', '..'))
-    csv_path = os.path.join(project_root, 'app', 'data',
-                            'algorithm3', csv_name)
+
+    # 根据算法类型确定子文件夹路径
+    algorithm_name = config.algorithm
+    learning_rate = config.learning_rate
+
+    # 确定使用max_depth还是max_epochs
+    if algorithm_name in ['xgboost', 'lightGBM']:
+        model_param = config.max_depth
+    else:  # TabNet
+        model_param = config.max_epochs
+
+    # 构建模型子目录名称
+    model_dir_name = f"{algorithm_name}_model_{learning_rate}_{model_param}"
+
+    # 完整的CSV文件路径
+    csv_path = os.path.join(
+        project_root,
+        'app',
+        'data',
+        'algorithm3',
+        algorithm_name,  # 算法名子文件夹
+        model_dir_name,  # 模型子文件夹
+        csv_name         # CSV文件名
+    )
 
     # 3. 检查CSV文件是否存在
     if not os.path.exists(csv_path):

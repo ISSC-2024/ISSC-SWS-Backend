@@ -25,7 +25,7 @@ class Algorithm3Result(Model):
         max_length=15, description="风险等级", null=False)
     risk_level_name = fields.CharField(
         max_length=10, description="风险等级名称", null=False)
-    message = fields.TextField(description="风险描述信息", null=False)
+    message = fields.TextField(description="风险描述信息", null=True)
 
     # 最后更新时间
     updated_at = fields.DatetimeField(auto_now=True, description="最后更新时间")

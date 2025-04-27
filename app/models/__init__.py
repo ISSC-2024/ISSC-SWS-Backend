@@ -5,3 +5,5 @@
 # 导入所有模型以确保 Aerich 能够检测到它们
 from app.models.algorithm2.algorithm2_config import Algorithm2Config
 from app.models.algorithm2.algorithm2_result import Algorithm2Result
+from app.models.algorithm3.algorithm3_config import Algorithm3Config
+from app.models.algorithm3.algorithm3_result import Algorithm3Result

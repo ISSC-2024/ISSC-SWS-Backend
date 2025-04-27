@@ -1,5 +1,6 @@
 import csv
 import logging
+import time
 from typing import Type, List, Dict, Any, Optional, Union
 from tortoise.models import Model
 from pathlib import Path
@@ -31,6 +32,9 @@ async def import_csv_to_model(
     返回:
         包含导入结果统计的字典
     """
+    # 记录开始时间
+    start_time = time.time()
+
     # 检查文件是否存在
     file_path = Path(csv_path)
     if not file_path.exists():
@@ -68,6 +72,17 @@ async def import_csv_to_model(
         "errors": [],
         "field_mapping": {}
     }
+
+    # 统计文件总行数，用于显示进度
+    total_lines = 0
+    with open(file_path, 'r', encoding=encoding) as f:
+        for _ in f:
+            total_lines += 1
+    # 减去标题行
+    total_lines -= 1
+
+    print(f"开始导入CSV文件: {csv_path}")
+    print(f"总行数: {total_lines}")
 
     try:
         with open(file_path, 'r', encoding=encoding) as csvfile:
@@ -114,6 +129,7 @@ async def import_csv_to_model(
             # 记录使用的字段映射
             stats["field_mapping"] = field_mapping
             logger.info(f"字段映射: {field_mapping}")
+            print(f"字段映射: {field_mapping}")
 
             # 重置文件指针，重新开始读取
             csvfile.seek(0)
@@ -127,8 +143,10 @@ async def import_csv_to_model(
 
             reader = csv.DictReader(csvfile)
             batch = []
+            batch_indices = []  # 记录每条记录在原始数据中的索引，用于错误定位
+            batch_count = 0  # 批次计数
 
-            for row in reader:
+            for idx, row in enumerate(reader):
                 stats["total"] += 1
 
                 # 构建模型字段数据
@@ -171,85 +189,135 @@ async def import_csv_to_model(
                     stats["failed"] += 1
                     continue
 
+                # 如果有配置ID，设置外键
+                if config_id is not None:
+                    # 使用正确的字段名设置外键ID
+                    record_data[f"{config_field_name}_id"] = config_id
+
                 batch.append(record_data)
+                batch_indices.append(idx + 1)  # 记录行号（从1开始）
 
-                # 达到批处理大小时执行插入
+                # 达到批处理大小时执行批量插入
                 if len(batch) >= batch_size:
+                    batch_count += 1
                     try:
-                        # 使用单个创建而不是批量创建，更可靠处理外键
+                        # 使用批量创建提高性能
+                        await model_class.bulk_create([model_class(**item) for item in batch])
+                        stats["imported"] += len(batch)
+
+                        # 打印进度信息
+                        elapsed_time = time.time() - start_time
+                        progress = (stats["imported"] +
+                                    stats["failed"]) / total_lines * 100
+                        rate = stats["imported"] / \
+                            elapsed_time if elapsed_time > 0 else 0
+
+                        print(f"批次 {batch_count}: 已导入 {stats['imported']}/{total_lines} ({progress:.2f}%), "
+                              f"速率: {rate:.1f} 记录/秒, 已用时间: {elapsed_time:.1f}秒")
+
+                    except Exception as e:
+                        # 批量创建失败时，尝试单个创建以识别问题记录
+                        logger.warning(f"批量插入失败，尝试单个插入: {str(e)}")
+                        print(f"批次 {batch_count} 批量插入失败，正在尝试单个插入...")
+
                         successful = 0
-                        for item in batch:
+                        for i, item in enumerate(batch):
                             try:
-                                # 排除可能的外键字段，因为我们会单独处理
-                                create_data = {
-                                    k: v for k, v in item.items() if k != config_field_name}
-
-                                # 如果有配置ID，设置外键
-                                if config_id is not None:
-                                    # 使用正确的字段名设置外键ID
-                                    create_data[f"{config_field_name}_id"] = config_id
-
-                                # 创建记录
-                                await model_class.create(**create_data)
+                                await model_class.create(**item)
                                 successful += 1
-                            except Exception as e:
-                                error_idx = stats["total"] - \
-                                    len(batch) + batch.index(item) + 1
-                                error = f"记录 {error_idx} 导入失败: {str(e)}, 数据: {item}"
+                            except Exception as sub_e:
+                                error = f"记录 {batch_indices[i]} 导入失败: {str(sub_e)}, 数据: {item}"
                                 stats["errors"].append(error)
                                 logger.error(error)
 
                         stats["imported"] += successful
                         stats["failed"] += (len(batch) - successful)
-                    except Exception as e:
-                        stats["failed"] += len(batch)
-                        error = f"批量处理失败: {str(e)}"
-                        stats["errors"].append(error)
-                        logger.error(error)
+
+                        # 打印单个插入的结果
+                        print(
+                            f"批次 {batch_count} 单个插入完成: 成功 {successful}/{len(batch)}")
+
+                        if successful == 0:
+                            # 如果所有记录插入都失败，添加总错误信息
+                            error = f"批量处理完全失败: {str(e)}"
+                            stats["errors"].append(error)
+                            logger.error(error)
 
                     # 清空批处理列表
                     batch = []
+                    batch_indices = []
 
             # 处理剩余的记录
             if batch:
+                batch_count += 1
                 try:
-                    # 使用单个创建而不是批量创建
+                    # 使用批量创建提高性能
+                    await model_class.bulk_create([model_class(**item) for item in batch])
+                    stats["imported"] += len(batch)
+
+                    # 打印最后一批的进度
+                    elapsed_time = time.time() - start_time
+                    progress = 100.0  # 已完成全部
+                    rate = stats["imported"] / \
+                        elapsed_time if elapsed_time > 0 else 0
+
+                    print(f"最后批次 {batch_count}: 已导入 {stats['imported']}/{total_lines} ({progress:.2f}%), "
+                          f"速率: {rate:.1f} 记录/秒, 已用时间: {elapsed_time:.1f}秒")
+
+                except Exception as e:
+                    # 批量创建失败时，尝试单个创建以识别问题记录
+                    logger.warning(f"批量插入失败，尝试单个插入: {str(e)}")
+                    print(f"最后批次 {batch_count} 批量插入失败，正在尝试单个插入...")
+
                     successful = 0
-                    for item in batch:
+                    for i, item in enumerate(batch):
                         try:
-                            # 排除可能的外键字段，单独处理
-                            create_data = {
-                                k: v for k, v in item.items() if k != config_field_name}
-
-                            # 如果有配置ID，设置外键
-                            if config_id is not None:
-                                # 使用正确的字段名设置外键ID
-                                create_data[f"{config_field_name}_id"] = config_id
-
-                            # 创建记录
-                            await model_class.create(**create_data)
+                            await model_class.create(**item)
                             successful += 1
-                        except Exception as e:
-                            error_idx = stats["total"] - \
-                                len(batch) + batch.index(item) + 1
-                            error = f"记录 {error_idx} 导入失败: {str(e)}, 数据: {item}"
+                        except Exception as sub_e:
+                            error = f"记录 {batch_indices[i]} 导入失败: {str(sub_e)}, 数据: {item}"
                             stats["errors"].append(error)
                             logger.error(error)
 
                     stats["imported"] += successful
                     stats["failed"] += (len(batch) - successful)
-                except Exception as e:
-                    stats["failed"] += len(batch)
-                    error = f"批量处理失败: {str(e)}"
-                    stats["errors"].append(error)
-                    logger.error(error)
+
+                    # 打印单个插入的结果
+                    print(
+                        f"最后批次 {batch_count} 单个插入完成: 成功 {successful}/{len(batch)}")
+
+                    if successful == 0:
+                        # 如果所有记录插入都失败，添加总错误信息
+                        error = f"批量处理完全失败: {str(e)}"
+                        stats["errors"].append(error)
+                        logger.error(error)
+
+        # 打印总结信息
+        total_time = time.time() - start_time
+        avg_rate = stats["imported"] / total_time if total_time > 0 else 0
+
+        print(f"\n导入完成摘要:")
+        print(f"总记录数: {stats['total']}")
+        print(
+            f"成功导入: {stats['imported']} ({stats['imported']/stats['total']*100:.2f}%)")
+        print(
+            f"导入失败: {stats['failed']} ({stats['failed']/stats['total']*100:.2f}%)")
+        print(f"总用时: {total_time:.2f}秒")
+        print(f"平均速率: {avg_rate:.1f} 记录/秒")
+
+        if stats["errors"]:
+            print(f"发生 {len(stats['errors'])} 个错误，详情请查看日志")
 
         stats["success"] = stats["failed"] < stats["total"]
+        stats["total_time"] = total_time
+        stats["avg_rate"] = avg_rate
+
         logger.info(
-            f"CSV导入完成: 共{stats['total']}条记录, 成功{stats['imported']}条, 失败{stats['failed']}条")
+            f"CSV导入完成: 共{stats['total']}条记录, 成功{stats['imported']}条, 失败{stats['failed']}条, 用时{total_time:.2f}秒")
         return stats
 
     except Exception as e:
         error_msg = f"CSV导入过程发生错误: {str(e)}"
         logger.error(error_msg)
+        print(f"导入失败: {error_msg}")
         return {"success": False, "error": error_msg}
