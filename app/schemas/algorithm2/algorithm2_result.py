@@ -11,4 +11,4 @@ class Algorithm2ResultBase(BaseModel):
 class Algorithm2ResultResponse(Algorithm2ResultBase):
 
     class Config:
-        orm_mode = True
+        from_attributes = True

@@ -12,7 +12,7 @@ async def lifespan(app: FastAPI):
     # 关闭时关闭数据库连接
     await close_db()
 
-app = FastAPI(lifespan=lifespan)
+app = FastAPI(lifespan=lifespan, title="全域互联的工业智能体协同平台后端")
 
 # 注册路由
 app.include_router(algorithm1.router,
@@ -24,3 +24,8 @@ app.include_router(algorithm3.router,
 app.include_router(algorithm4.router,
                    prefix="/api/algorithm4", tags=["Algorithm4"])
 app.include_router(llm.router, prefix="/api/llm", tags=["LLM"])
+
+# 直接运行此脚本，启动服务器
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run('main:app', host="0.0.0.0", port=8000, reload=True)
