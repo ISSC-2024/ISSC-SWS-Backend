@@ -7,3 +7,5 @@ from app.models.algorithm2.algorithm2_config import Algorithm2Config
 from app.models.algorithm2.algorithm2_result import Algorithm2Result
 from app.models.algorithm3.algorithm3_config import Algorithm3Config
 from app.models.algorithm3.algorithm3_result import Algorithm3Result
+from app.models.llm.conversation import Conversation
+from app.models.llm.message import Message

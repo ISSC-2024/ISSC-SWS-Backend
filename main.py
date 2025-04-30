@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Request
 from contextlib import asynccontextmanager
 from app.db.tortoise import init_db, close_db
-from app.api.endpoints import algorithm1, algorithm2, algorithm3, algorithm4, llm
+from app.api.endpoints import algorithm1, algorithm2, algorithm3, algorithm4, conversation, llm
 
 
 @asynccontextmanager
@@ -52,6 +52,8 @@ app.include_router(algorithm3.router,
 app.include_router(algorithm4.router,
                    prefix="/api/algorithm4", tags=["Algorithm4"])
 app.include_router(llm.router, prefix="/api/llm", tags=["LLM"])
+app.include_router(conversation.router,
+                   prefix="/api/conversations", tags=["Conversations"])
 
 # 直接运行此脚本，启动服务器
 if __name__ == "__main__":
