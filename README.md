@@ -107,7 +107,7 @@
 4. 启动服务
 
    ```bash
-   uvicorn app.main:app --reload
+   uv run main.py
    ```
 
 5. 访问 API 文档：http://localhost:8000/docs
@@ -120,7 +120,7 @@
 2. 在 schemas 中创建相应的 Schema
 3. 在 services 中实现算法逻辑
 4. 在 endpoints 中实现 API
-5. 在`app/main.py`中注册路由
+5. 在`main.py`中注册路由
 
 ### 数据库迁移
 
