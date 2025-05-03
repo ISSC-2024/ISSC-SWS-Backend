@@ -2,6 +2,7 @@ from fastapi import FastAPI, Request
 from contextlib import asynccontextmanager
 from app.db.tortoise import init_db, close_db
 from app.api.endpoints import algorithm1, algorithm2, algorithm3, algorithm4, conversation, llm
+from fastapi.middleware.cors import CORSMiddleware
 
 
 @asynccontextmanager
@@ -14,33 +15,14 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(lifespan=lifespan, title="全域互联的工业智能体协同平台后端")
 
-# 配置CORS - 只允许同IP访问
-
-
-@app.middleware("http")
-async def add_cors_header(request: Request, call_next):
-    # 获取请求的主机IP
-    host = request.headers.get("host", "").split(":")[0]
-    print(f"Host: {host}")
-    # 构建允许的origin
-    origins = [f"http://{host}", f"https://{host}",
-               f"http://{host}:*", f"https://{host}:*"]
-
-    response = await call_next(request)
-
-    # 获取请求的Origin
-    origin = request.headers.get("origin", "")
-    print(f"Origin: {origin}")
-    # 检查Origin是否来自同一IP
-    for allowed_origin in origins:
-        if allowed_origin.replace("*", "") in origin:
-            response.headers["Access-Control-Allow-Origin"] = origin
-            response.headers["Access-Control-Allow-Credentials"] = "true"
-            response.headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS"
-            response.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization"
-            break
-
-    return response
+# 配置CORS - 允许所有来源
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # 允许所有来源
+    allow_credentials=True,
+    allow_methods=["*"],  # 允许所有方法
+    allow_headers=["*"],  # 允许所有请求头
+)
 
 # 注册路由
 app.include_router(algorithm1.router,
