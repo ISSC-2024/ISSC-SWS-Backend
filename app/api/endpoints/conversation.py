@@ -24,10 +24,11 @@ async def get_conversation_or_404(conversation_id: int) -> Conversation:
 @router.post("", response_model=ConversationResponse, status_code=201)
 async def create_conversation(conversation: ConversationCreate):
     """创建新对话"""
-    new_conversation = await Conversation.create(title=conversation.title)
+    new_conversation = await Conversation.create(title=conversation.title, model=conversation.model)
     return {
         "id": new_conversation.conversation_id,
         "title": new_conversation.title,
+        "model": conversation.model,
         "createdAt": new_conversation.created_at,
         "updatedAt": new_conversation.updated_at,
         "messageCount": 0
@@ -48,6 +49,7 @@ async def get_conversations():
         {
             "id": conv.conversation_id,
             "title": conv.title,
+            "model": conv.model,
             "createdAt": conv.created_at,
             "updatedAt": conv.updated_at,
             "messageCount": conv.message_count
@@ -72,6 +74,7 @@ async def update_conversation(
     return {
         "id": conversation.conversation_id,
         "title": conversation.title,
+        "model": conversation.model,
         "createdAt": conversation.created_at,
         "updatedAt": conversation.updated_at,
         "messageCount": message_count
