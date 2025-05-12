@@ -1,6 +1,7 @@
 from tortoise import fields
 from tortoise.models import Model
-from typing import Optional, Dict, Any
+from typing import Any
+from tortoise.indexes import Index
 
 
 class PredictionsArimaAuto(Model):
@@ -14,6 +15,7 @@ class PredictionsArimaAuto(Model):
     # 时间和位置标识
     timestamp = fields.DatetimeField(description="预测时间点")
     point_id = fields.CharField(max_length=10, description="监测点ID")
+    region = fields.CharField(max_length=10, description="区域", null=True)
 
     # 传感器数据
     temperature = fields.FloatField(null=True, description="温度")
@@ -32,7 +34,15 @@ class PredictionsArimaAuto(Model):
         table = "predictions_arima_auto"
         description = "ARIMA自动预测结果表"
         indexes = [
-            ("timestamp", "point_id"),
-            "timestamp",
-            "point_id"
+            Index(fields=["timestamp"]),
+            Index(fields=["point_id"]),
+            Index(fields=["region"]),
         ]
+
+    async def save(self, *args: Any, **kwargs: Any) -> None:
+        # point_id前3个字符作为区域
+        if self.point_id and len(self.point_id) >= 3:
+            self.region = self.point_id[:3]
+        else:
+            self.region = None
+        await super().save(*args, **kwargs)

@@ -26,8 +26,8 @@ class Algorithm3Result(Model):
         # 索引
         indexes = [
             # config_id和region联合索引
-            Index(fields={"config_id", "region"},
+            Index(fields=["config_id", "region"],
                   name="idx_algorithm3_result_config_region"),
             # risk_level索引
-            Index(fields={"risk_level"}, name="idx_algorithm3_result_risk"),
+            Index(fields=["risk_level"], name="idx_algorithm3_result_risk"),
         ]

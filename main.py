@@ -15,13 +15,13 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(lifespan=lifespan, title="全域互联的工业智能体协同平台后端")
 
-# 配置CORS - 允许所有来源
+# 配置CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # 允许所有来源
+    allow_origins=["*"],
     allow_credentials=True,
-    allow_methods=["*"],  # 允许所有方法
-    allow_headers=["*"],  # 允许所有请求头
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 # 注册路由
@@ -37,7 +37,6 @@ app.include_router(llm.router, prefix="/api/llm", tags=["LLM"])
 app.include_router(conversation.router,
                    prefix="/api/conversations", tags=["Conversations"])
 
-# 直接运行此脚本，启动服务器
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run('main:app', host="localhost", port=8000, reload=True)
