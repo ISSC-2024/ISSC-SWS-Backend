@@ -4,11 +4,11 @@ from typing import Any
 from tortoise.indexes import Index
 
 
-class PredictionsArimaAuto(Model):
+class PredictionsTimeMixerAuto(Model):
     """
-    ARIMA自动预测结果表模型
+    TimeMixer自动预测结果表模型
 
-    存储ARIMA模型自动生成的预测数据，包括时间戳、点位ID和各种传感器数据
+    存储TimeMixer模型自动生成的预测数据，包括时间戳、点位ID和各种传感器数据
     """
     id = fields.IntField(pk=True, description="记录ID")
 
@@ -31,8 +31,8 @@ class PredictionsArimaAuto(Model):
     updated_at = fields.DatetimeField(auto_now=True, description="最后更新时间")
 
     class Meta:
-        table = "predictions_arima_auto"
-        description = "ARIMA自动预测结果表"
+        table = "predictions_timemixer_auto"
+        description = "TimeMixer自动预测结果表"
         indexes = [
             Index(fields=["timestamp"]),
             Index(fields=["point_id"]),

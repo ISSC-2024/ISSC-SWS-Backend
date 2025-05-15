@@ -1,0 +1,73 @@
+# 多智能体协同资源优化系统算法说明
+
+## 1. Independent Q-Learning (IQL)
+
+### 必填参数
+- algorithm_type: 1
+
+### 可选参数
+- learning_rate: 学习率，默认值0.01，影响学习速度和稳定性
+- discount_factor: 折扣因子，默认值0.95，控制未来奖励的重要性
+- exploration_rate: 探索率，默认值0.1，控制智能体探索新动作的概率
+- max_iterations: 最大迭代次数，默认值1000，防止无限循环
+- convergence_threshold: 收敛阈值，默认值0.005，当资源分配变化小于此值时认为已收敛
+
+### 功能描述
+基础的Q学习算法，每个智能体独立学习资源分配策略。适用于简单的资源分配场景，计算开销小，易于实现和调试。适合资源有限的环境或对实时性要求较高的场景。
+
+## 2. Deep Q-Network (DQN)
+
+### 必填参数
+- algorithm_type: 2
+
+### 可选参数
+- learning_rate: 学习率，默认值0.01，影响学习速度和稳定性
+- discount_factor: 折扣因子，默认值0.95，控制未来奖励的重要性
+- exploration_rate: 探索率，默认值0.1，控制智能体探索新动作的概率
+- max_iterations: 最大迭代次数，默认值1000，防止无限循环
+- convergence_threshold: 收敛阈值，默认值0.005，当资源分配变化小于此值时认为已收敛
+- hidden_dim: 神经网络隐藏层维度，默认值64，影响模型复杂度和表达能力
+
+### 功能描述
+使用深度神经网络的Q学习算法，能够处理更复杂的状态空间。适用于中等复杂度的资源分配问题，可以学习更复杂的资源分配策略。适合资源状态变化较大或需要考虑多种因素的场景。
+
+## 3. Multi-Agent Deep Deterministic Policy Gradient (MADDPG)
+
+### 必填参数
+- algorithm_type: 3
+
+### 可选参数
+- learning_rate: 学习率，默认值0.01，影响学习速度和稳定性
+- discount_factor: 折扣因子，默认值0.95，控制未来奖励的重要性
+- exploration_rate: 探索率，默认值0.1，控制智能体探索新动作的概率
+- max_iterations: 最大迭代次数，默认值1000，防止无限循环
+- convergence_threshold: 收敛阈值，默认值0.005，当资源分配变化小于此值时认为已收敛
+- hidden_dim: 神经网络隐藏层维度，默认值64，影响模型复杂度和表达能力
+- actor_lr: Actor网络学习率，默认值3e-4
+- critic_lr: Critic网络学习率，默认值1e-3
+
+### 功能描述
+多智能体确定性策略梯度算法，能够处理连续动作空间和多智能体协作。适用于复杂的资源分配问题，特别是需要多种资源类型协同优化的场景。适合资源之间存在相互影响或需要全局最优解的情况。
+
+## 4. Multi-Agent Proximal Policy Optimization (MAPPO)
+
+### 必填参数
+- algorithm_type: 4
+
+### 可选参数
+- learning_rate: 学习率，默认值0.01，影响学习速度和稳定性
+- discount_factor: 折扣因子，默认值0.95，控制未来奖励的重要性
+- exploration_rate: 探索率，默认值0.1，控制智能体探索新动作的概率
+- max_iterations: 最大迭代次数，默认值1000，防止无限循环
+- convergence_threshold: 收敛阈值，默认值0.005，当资源分配变化小于此值时认为已收敛
+- hidden_dim: 神经网络隐藏层维度，默认值64，影响模型复杂度和表达能力
+- actor_lr: Actor网络学习率，默认值3e-4
+- critic_lr: Critic网络学习率，默认值1e-3
+- gae_lambda: GAE参数，默认值0.95，用于计算优势函数
+- clip_param: PPO裁剪参数，默认值0.2，控制策略更新的幅度
+- value_coef: 价值损失系数，默认值0.5，平衡策略和价值网络的更新
+- entropy_coef: 熵损失系数，默认值0.01，鼓励探索
+- max_grad_norm: 梯度裁剪阈值，默认值0.5，防止梯度爆炸
+
+### 功能描述
+多智能体近端策略优化算法，提供更稳定的训练过程和更好的样本效率。适用于高度复杂的资源分配问题，特别是风险敏感或需要精确控制的场景。适合需要长期规划或对资源分配质量要求极高的情况。

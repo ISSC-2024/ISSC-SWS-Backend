@@ -1,0 +1,2916 @@
+{
+  "timestamp": "2025-04-16 18:09:15",
+  "algorithm": {
+    "type": 3,
+    "name": "MADDPG"
+  },
+  "performance": {
+    "execution_time": 0.23396587371826172,
+    "iterations": 79,
+    "converged": true,
+    "response_time": 233.96587371826172,
+    "response_timeliness": 0.9864680935638119,
+    "response_quality": 1,
+    "resource_utilization": 0.0,
+    "event_completion_rate": 0.5
+  },
+  "resources": {
+    "personnel": {
+      "title": "人员分配",
+      "data": [
+        {
+          "name": "原料储存区",
+          "value": 90.0,
+          "color": "#FF6666"
+        },
+        {
+          "name": "反应器区",
+          "value": 200.0,
+          "color": "#FF6666"
+        },
+        {
+          "name": "分离提纯区",
+          "value": 0.0,
+          "color": "#CCCCCC"
+        },
+        {
+          "name": "成品储存区",
+          "value": 20.0,
+          "color": "#66CC66"
+        },
+        {
+          "name": "公用工程区",
+          "value": 30.0,
+          "color": "#3399FF"
+        }
+      ],
+      "subtypes": {
+        "technician": {
+          "title": "技术员",
+          "data": [
+            {
+              "name": "原料储存区",
+              "value": 90.0,
+              "color": "#FF6666"
+            },
+            {
+              "name": "反应器区",
+              "value": 0.0,
+              "color": "#CCCCCC"
+            },
+            {
+              "name": "分离提纯区",
+              "value": 0.0,
+              "color": "#CCCCCC"
+            },
+            {
+              "name": "成品储存区",
+              "value": 0.0,
+              "color": "#CCCCCC"
+            },
+            {
+              "name": "公用工程区",
+              "value": 0.0,
+              "color": "#CCCCCC"
+            }
+          ]
+        },
+        "manager": {
+          "title": "管理员",
+          "data": [
+            {
+              "name": "原料储存区",
+              "value": 0.0,
+              "color": "#CCCCCC"
+            },
+            {
+              "name": "反应器区",
+              "value": 25.0,
+              "color": "#66CC66"
+            },
+            {
+              "name": "分离提纯区",
+              "value": 0.0,
+              "color": "#CCCCCC"
+            },
+            {
+              "name": "成品储存区",
+              "value": 20.0,
+              "color": "#66CC66"
+            },
+            {
+              "name": "公用工程区",
+              "value": 0.0,
+              "color": "#CCCCCC"
+            }
+          ]
+        },
+        "maintenance": {
+          "title": "维修员",
+          "data": [
+            {
+              "name": "原料储存区",
+              "value": 0.0,
+              "color": "#CCCCCC"
+            },
+            {
+              "name": "反应器区",
+              "value": 65.0,
+              "color": "#FF9933"
+            },
+            {
+              "name": "分离提纯区",
+              "value": 0.0,
+              "color": "#CCCCCC"
+            },
+            {
+              "name": "成品储存区",
+              "value": 0.0,
+              "color": "#CCCCCC"
+            },
+            {
+              "name": "公用工程区",
+              "value": 0.0,
+              "color": "#CCCCCC"
+            }
+          ]
+        },
+        "operator": {
+          "title": "操作员",
+          "data": [
+            {
+              "name": "原料储存区",
+              "value": 0.0,
+              "color": "#CCCCCC"
+            },
+            {
+              "name": "反应器区",
+              "value": 110.0,
+              "color": "#FF6666"
+            },
+            {
+              "name": "分离提纯区",
+              "value": 0.0,
+              "color": "#CCCCCC"
+            },
+            {
+              "name": "成品储存区",
+              "value": 0.0,
+              "color": "#CCCCCC"
+            },
+            {
+              "name": "公用工程区",
+              "value": 0.0,
+              "color": "#CCCCCC"
+            }
+          ]
+        },
+        "safety": {
+          "title": "安全员",
+          "data": [
+            {
+              "name": "原料储存区",
+              "value": 0.0,
+              "color": "#CCCCCC"
+            },
+            {
+              "name": "反应器区",
+              "value": 0.0,
+              "color": "#CCCCCC"
+            },
+            {
+              "name": "分离提纯区",
+              "value": 0.0,
+              "color": "#CCCCCC"
+            },
+            {
+              "name": "成品储存区",
+              "value": 0.0,
+              "color": "#CCCCCC"
+            },
+            {
+              "name": "公用工程区",
+              "value": 30.0,
+              "color": "#3399FF"
+            }
+          ]
+        }
+      }
+    },
+    "materials": {
+      "title": "物料分配",
+      "data": [
+        {
+          "name": "原料储存区",
+          "value": 40.0,
+          "color": "#3399FF"
+        },
+        {
+          "name": "反应器区",
+          "value": 30.0,
+          "color": "#3399FF"
+        },
+        {
+          "name": "分离提纯区",
+          "value": 100.0,
+          "color": "#FF6666"
+        },
+        {
+          "name": "成品储存区",
+          "value": 20.0,
+          "color": "#66CC66"
+        },
+        {
+          "name": "公用工程区",
+          "value": 610.0,
+          "color": "#FF6666"
+        }
+      ],
+      "subtypes": {
+        "raw_material": {
+          "title": "原料",
+          "data": [
+            {
+              "name": "原料储存区",
+              "value": 300,
+              "color": "#4CAF50"
+            },
+            {
+              "name": "反应器区",
+              "value": 200,
+              "color": "#2196F3"
+            },
+            {
+              "name": "分离提纯区",
+              "value": 100,
+              "color": "#FFC107"
+            },
+            {
+              "name": "成品储存区",
+              "value": 50,
+              "color": "#9C27B0"
+            },
+            {
+              "name": "公用工程区",
+              "value": 250,
+              "color": "#FF5722"
+            }
+          ]
+        },
+        "catalyst": {
+          "title": "催化剂",
+          "data": [
+            {
+              "name": "原料储存区",
+              "value": 30.0,
+              "color": "#3399FF"
+            },
+            {
+              "name": "反应器区",
+              "value": 20.0,
+              "color": "#66CC66"
+            },
+            {
+              "name": "分离提纯区",
+              "value": 10.0,
+              "color": "#66CC66"
+            },
+            {
+              "name": "成品储存区",
+              "value": 10.0,
+              "color": "#66CC66"
+            },
+            {
+              "name": "公用工程区",
+              "value": 330.0,
+              "color": "#FF6666"
+            }
+          ]
+        },
+        "storage": {
+          "title": "存储容量",
+          "data": [
+            {
+              "name": "原料储存区",
+              "value": 10.0,
+              "color": "#66CC66"
+            },
+            {
+              "name": "反应器区",
+              "value": 10.0,
+              "color": "#66CC66"
+            },
+            {
+              "name": "分离提纯区",
+              "value": 90.0,
+              "color": "#FF6666"
+            },
+            {
+              "name": "成品储存区",
+              "value": 10.0,
+              "color": "#66CC66"
+            },
+            {
+              "name": "公用工程区",
+              "value": 280.0,
+              "color": "#FF6666"
+            }
+          ]
+        }
+      }
+    },
+    "electricity": {
+      "title": "电力分配",
+      "data": [
+        {
+          "name": "原料储存区",
+          "value": 20.0,
+          "color": "#66CC66"
+        },
+        {
+          "name": "反应器区",
+          "value": 130.0,
+          "color": "#FF6666"
+        },
+        {
+          "name": "分离提纯区",
+          "value": 60.0,
+          "color": "#FF9933"
+        },
+        {
+          "name": "成品储存区",
+          "value": 40.0,
+          "color": "#3399FF"
+        },
+        {
+          "name": "公用工程区",
+          "value": 2350.0,
+          "color": "#FF6666"
+        }
+      ]
+    }
+  },
+  "risk_data": {
+    "workshop_risks": {
+      "原料储存区": {
+        "risk_score": 0.14958333333333335,
+        "risk_factors": {
+          "equipment": 0.14958333333333335,
+          "process": 0.14958333333333335,
+          "environment": 0.14958333333333335,
+          "human": 0.14958333333333335
+        },
+        "historical_incidents": 238
+      },
+      "反应器区": {
+        "risk_score": 0.34,
+        "risk_factors": {
+          "equipment": 0.34,
+          "process": 0.34,
+          "environment": 0.34,
+          "human": 0.34
+        },
+        "historical_incidents": 1440
+      },
+      "分离提纯区": {
+        "risk_score": 0.154375,
+        "risk_factors": {
+          "equipment": 0.154375,
+          "process": 0.154375,
+          "environment": 0.154375,
+          "human": 0.154375
+        },
+        "historical_incidents": 261
+      },
+      "成品储存区": {
+        "risk_score": 0.1,
+        "risk_factors": {
+          "equipment": 0.1,
+          "process": 0.1,
+          "environment": 0.1,
+          "human": 0.1
+        },
+        "historical_incidents": 0
+      },
+      "公用工程区": {
+        "risk_score": 0.149375,
+        "risk_factors": {
+          "equipment": 0.149375,
+          "process": 0.149375,
+          "environment": 0.149375,
+          "human": 0.149375
+        },
+        "historical_incidents": 237
+      }
+    },
+    "risk_levels": {
+      "原料储存区": "low",
+      "反应器区": "medium",
+      "分离提纯区": "low",
+      "成品储存区": "low",
+      "公用工程区": "low"
+    },
+    "risk_priority_weights": {
+      "原料储存区": 0.16666666666666666,
+      "反应器区": 0.3333333333333333,
+      "分离提纯区": 0.16666666666666666,
+      "成品储存区": 0.16666666666666666,
+      "公用工程区": 0.16666666666666666
+    }
+  },
+  "resource_flows": [
+    {
+      "from_workshop": "分离提纯区",
+      "to_workshop": "反应器区",
+      "resource_type": "personnel",
+      "amount": 0,
+      "iteration": 1,
+      "timestamp": 1744798155.0812683
+    },
+    {
+      "from_workshop": "反应器区",
+      "to_workshop": "公用工程区",
+      "resource_type": "personnel_technician",
+      "amount": 0,
+      "iteration": 1,
+      "timestamp": 1744798155.0812683
+    },
+    {
+      "from_workshop": "公用工程区",
+      "to_workshop": "分离提纯区",
+      "resource_type": "personnel_maintenance",
+      "amount": 0,
+      "iteration": 1,
+      "timestamp": 1744798155.0822682
+    },
+    {
+      "from_workshop": "成品储存区",
+      "to_workshop": "公用工程区",
+      "resource_type": "personnel_manager",
+      "amount": 0,
+      "iteration": 1,
+      "timestamp": 1744798155.0822682
+    },
+    {
+      "from_workshop": "原料储存区",
+      "to_workshop": "成品储存区",
+      "resource_type": "personnel_operator",
+      "amount": 0,
+      "iteration": 1,
+      "timestamp": 1744798155.0822682
+    },
+    {
+      "from_workshop": "成品储存区",
+      "to_workshop": "反应器区",
+      "resource_type": "personnel_safety",
+      "amount": 0,
+      "iteration": 1,
+      "timestamp": 1744798155.0822682
+    },
+    {
+      "from_workshop": "原料储存区",
+      "to_workshop": "成品储存区",
+      "resource_type": "materials",
+      "amount": 0.05,
+      "iteration": 1,
+      "timestamp": 1744798155.0832682
+    },
+    {
+      "from_workshop": "公用工程区",
+      "to_workshop": "分离提纯区",
+      "resource_type": "materials_raw",
+      "amount": 0.05,
+      "iteration": 1,
+      "timestamp": 1744798155.0832682
+    },
+    {
+      "from_workshop": "原料储存区",
+      "to_workshop": "成品储存区",
+      "resource_type": "materials_catalyst",
+      "amount": 0.05,
+      "iteration": 1,
+      "timestamp": 1744798155.0832682
+    },
+    {
+      "from_workshop": "成品储存区",
+      "to_workshop": "原料储存区",
+      "resource_type": "materials_storage",
+      "amount": 0.05,
+      "iteration": 1,
+      "timestamp": 1744798155.0832682
+    },
+    {
+      "from_workshop": "原料储存区",
+      "to_workshop": "分离提纯区",
+      "resource_type": "electricity",
+      "amount": 0.05,
+      "iteration": 1,
+      "timestamp": 1744798155.0832682
+    },
+    {
+      "from_workshop": "公用工程区",
+      "to_workshop": "原料储存区",
+      "resource_type": "personnel_technician",
+      "amount": 0,
+      "iteration": 2,
+      "timestamp": 1744798155.0842683
+    },
+    {
+      "from_workshop": "分离提纯区",
+      "to_workshop": "原料储存区",
+      "resource_type": "personnel_manager",
+      "amount": 0,
+      "iteration": 2,
+      "timestamp": 1744798155.0842683
+    },
+    {
+      "from_workshop": "公用工程区",
+      "to_workshop": "反应器区",
+      "resource_type": "personnel_operator",
+      "amount": 0,
+      "iteration": 2,
+      "timestamp": 1744798155.0842683
+    },
+    {
+      "from_workshop": "原料储存区",
+      "to_workshop": "公用工程区",
+      "resource_type": "personnel_safety",
+      "amount": 0,
+      "iteration": 2,
+      "timestamp": 1744798155.085832
+    },
+    {
+      "from_workshop": "公用工程区",
+      "to_workshop": "原料储存区",
+      "resource_type": "materials",
+      "amount": 0.05,
+      "iteration": 2,
+      "timestamp": 1744798155.085832
+    },
+    {
+      "from_workshop": "公用工程区",
+      "to_workshop": "分离提纯区",
+      "resource_type": "materials_raw",
+      "amount": 0.05,
+      "iteration": 2,
+      "timestamp": 1744798155.085832
+    },
+    {
+      "from_workshop": "反应器区",
+      "to_workshop": "原料储存区",
+      "resource_type": "materials_catalyst",
+      "amount": 0.05,
+      "iteration": 2,
+      "timestamp": 1744798155.085832
+    },
+    {
+      "from_workshop": "反应器区",
+      "to_workshop": "成品储存区",
+      "resource_type": "materials_storage",
+      "amount": 0.05,
+      "iteration": 2,
+      "timestamp": 1744798155.085832
+    },
+    {
+      "from_workshop": "原料储存区",
+      "to_workshop": "成品储存区",
+      "resource_type": "electricity",
+      "amount": 0.05,
+      "iteration": 2,
+      "timestamp": 1744798155.0868335
+    },
+    {
+      "from_workshop": "公用工程区",
+      "to_workshop": "反应器区",
+      "resource_type": "personnel",
+      "amount": 0,
+      "iteration": 3,
+      "timestamp": 1744798155.0868335
+    },
+    {
+      "from_workshop": "原料储存区",
+      "to_workshop": "反应器区",
+      "resource_type": "personnel_maintenance",
+      "amount": 0,
+      "iteration": 3,
+      "timestamp": 1744798155.0868335
+    },
+    {
+      "from_workshop": "公用工程区",
+      "to_workshop": "成品储存区",
+      "resource_type": "personnel_safety",
+      "amount": 0,
+      "iteration": 3,
+      "timestamp": 1744798155.0878332
+    },
+    {
+      "from_workshop": "原料储存区",
+      "to_workshop": "分离提纯区",
+      "resource_type": "materials",
+      "amount": 0.05,
+      "iteration": 3,
+      "timestamp": 1744798155.0878332
+    },
+    {
+      "from_workshop": "分离提纯区",
+      "to_workshop": "公用工程区",
+      "resource_type": "materials_raw",
+      "amount": 0.05,
+      "iteration": 3,
+      "timestamp": 1744798155.0878332
+    },
+    {
+      "from_workshop": "原料储存区",
+      "to_workshop": "反应器区",
+      "resource_type": "materials_catalyst",
+      "amount": 0.05,
+      "iteration": 3,
+      "timestamp": 1744798155.0878332
+    },
+    {
+      "from_workshop": "公用工程区",
+      "to_workshop": "原料储存区",
+      "resource_type": "materials_storage",
+      "amount": 0.05,
+      "iteration": 3,
+      "timestamp": 1744798155.0878332
+    },
+    {
+      "from_workshop": "分离提纯区",
+      "to_workshop": "公用工程区",
+      "resource_type": "electricity",
+      "amount": 0.05,
+      "iteration": 3,
+      "timestamp": 1744798155.0888336
+    },
+    {
+      "from_workshop": "分离提纯区",
+      "to_workshop": "反应器区",
+      "resource_type": "personnel_operator",
+      "amount": 0,
+      "iteration": 4,
+      "timestamp": 1744798155.089833
+    },
+    {
+      "from_workshop": "反应器区",
+      "to_workshop": "公用工程区",
+      "resource_type": "personnel_safety",
+      "amount": 0,
+      "iteration": 4,
+      "timestamp": 1744798155.089833
+    },
+    {
+      "from_workshop": "原料储存区",
+      "to_workshop": "分离提纯区",
+      "resource_type": "materials",
+      "amount": 0.05,
+      "iteration": 4,
+      "timestamp": 1744798155.089833
+    },
+    {
+      "from_workshop": "公用工程区",
+      "to_workshop": "分离提纯区",
+      "resource_type": "materials_raw",
+      "amount": 0.05,
+      "iteration": 4,
+      "timestamp": 1744798155.089833
+    },
+    {
+      "from_workshop": "反应器区",
+      "to_workshop": "原料储存区",
+      "resource_type": "materials_catalyst",
+      "amount": 0.05,
+      "iteration": 4,
+      "timestamp": 1744798155.089833
+    },
+    {
+      "from_workshop": "成品储存区",
+      "to_workshop": "原料储存区",
+      "resource_type": "materials_storage",
+      "amount": 0.05,
+      "iteration": 4,
+      "timestamp": 1744798155.089833
+    },
+    {
+      "from_workshop": "原料储存区",
+      "to_workshop": "公用工程区",
+      "resource_type": "electricity",
+      "amount": 0.05,
+      "iteration": 4,
+      "timestamp": 1744798155.0908334
+    },
+    {
+      "from_workshop": "成品储存区",
+      "to_workshop": "公用工程区",
+      "resource_type": "personnel_maintenance",
+      "amount": 0,
+      "iteration": 5,
+      "timestamp": 1744798155.0918336
+    },
+    {
+      "from_workshop": "原料储存区",
+      "to_workshop": "成品储存区",
+      "resource_type": "personnel_manager",
+      "amount": 1,
+      "iteration": 5,
+      "timestamp": 1744798155.0918336
+    },
+    {
+      "from_workshop": "原料储存区",
+      "to_workshop": "成品储存区",
+      "resource_type": "materials",
+      "amount": 0.05,
+      "iteration": 5,
+      "timestamp": 1744798155.0928335
+    },
+    {
+      "from_workshop": "原料储存区",
+      "to_workshop": "成品储存区",
+      "resource_type": "materials_raw",
+      "amount": 0.05,
+      "iteration": 5,
+      "timestamp": 1744798155.0928335
+    },
+    {
+      "from_workshop": "原料储存区",
+      "to_workshop": "成品储存区",
+      "resource_type": "materials_catalyst",
+      "amount": 0.05,
+      "iteration": 5,
+      "timestamp": 1744798155.0928335
+    },
+    {
+      "from_workshop": "原料储存区",
+      "to_workshop": "公用工程区",
+      "resource_type": "materials_storage",
+      "amount": 0.05,
+      "iteration": 5,
+      "timestamp": 1744798155.0928335
+    },
+    {
+      "from_workshop": "成品储存区",
+      "to_workshop": "公用工程区",
+      "resource_type": "electricity",
+      "amount": 0.05,
+      "iteration": 5,
+      "timestamp": 1744798155.0928335
+    },
+    {
+      "from_workshop": "公用工程区",
+      "to_workshop": "成品储存区",
+      "resource_type": "materials",
+      "amount": 0.05,
+      "iteration": 6,
+      "timestamp": 1744798155.0938334
+    },
+    {
+      "from_workshop": "分离提纯区",
+      "to_workshop": "公用工程区",
+      "resource_type": "materials_raw",
+      "amount": 0.05,
+      "iteration": 6,
+      "timestamp": 1744798155.0948334
+    },
+    {
+      "from_workshop": "成品储存区",
+      "to_workshop": "公用工程区",
+      "resource_type": "materials_catalyst",
+      "amount": 0.05,
+      "iteration": 6,
+      "timestamp": 1744798155.0948334
+    },
+    {
+      "from_workshop": "分离提纯区",
+      "to_workshop": "原料储存区",
+      "resource_type": "materials_storage",
+      "amount": 0.05,
+      "iteration": 6,
+      "timestamp": 1744798155.0948334
+    },
+    {
+      "from_workshop": "成品储存区",
+      "to_workshop": "公用工程区",
+      "resource_type": "electricity",
+      "amount": 0.05,
+      "iteration": 6,
+      "timestamp": 1744798155.0948334
+    },
+    {
+      "from_workshop": "反应器区",
+      "to_workshop": "原料储存区",
+      "resource_type": "personnel",
+      "amount": 1,
+      "iteration": 7,
+      "timestamp": 1744798155.0948334
+    },
+    {
+      "from_workshop": "分离提纯区",
+      "to_workshop": "公用工程区",
+      "resource_type": "personnel_safety",
+      "amount": 0,
+      "iteration": 7,
+      "timestamp": 1744798155.0958335
+    },
+    {
+      "from_workshop": "原料储存区",
+      "to_workshop": "成品储存区",
+      "resource_type": "materials",
+      "amount": 0.05,
+      "iteration": 7,
+      "timestamp": 1744798155.0958335
+    },
+    {
+      "from_workshop": "分离提纯区",
+      "to_workshop": "原料储存区",
+      "resource_type": "materials_raw",
+      "amount": 0.05,
+      "iteration": 7,
+      "timestamp": 1744798155.0968332
+    },
+    {
+      "from_workshop": "原料储存区",
+      "to_workshop": "反应器区",
+      "resource_type": "materials_catalyst",
+      "amount": 0.05,
+      "iteration": 7,
+      "timestamp": 1744798155.0968332
+    },
+    {
+      "from_workshop": "反应器区",
+      "to_workshop": "公用工程区",
+      "resource_type": "materials_storage",
+      "amount": 0.05,
+      "iteration": 7,
+      "timestamp": 1744798155.0968332
+    },
+    {
+      "from_workshop": "分离提纯区",
+      "to_workshop": "原料储存区",
+      "resource_type": "electricity",
+      "amount": 0.05,
+      "iteration": 7,
+      "timestamp": 1744798155.0968332
+    },
+    {
+      "from_workshop": "分离提纯区",
+      "to_workshop": "反应器区",
+      "resource_type": "personnel_maintenance",
+      "amount": 0,
+      "iteration": 8,
+      "timestamp": 1744798155.0978334
+    },
+    {
+      "from_workshop": "公用工程区",
+      "to_workshop": "成品储存区",
+      "resource_type": "materials",
+      "amount": 0.05,
+      "iteration": 8,
+      "timestamp": 1744798155.0988336
+    },
+    {
+      "from_workshop": "反应器区",
+      "to_workshop": "分离提纯区",
+      "resource_type": "materials_raw",
+      "amount": 0.05,
+      "iteration": 8,
+      "timestamp": 1744798155.0988336
+    },
+    {
+      "from_workshop": "反应器区",
+      "to_workshop": "原料储存区",
+      "resource_type": "materials_catalyst",
+      "amount": 0.05,
+      "iteration": 8,
+      "timestamp": 1744798155.0988336
+    },
+    {
+      "from_workshop": "原料储存区",
+      "to_workshop": "反应器区",
+      "resource_type": "materials_storage",
+      "amount": 0.05,
+      "iteration": 8,
+      "timestamp": 1744798155.0998333
+    },
+    {
+      "from_workshop": "成品储存区",
+      "to_workshop": "公用工程区",
+      "resource_type": "electricity",
+      "amount": 0.05,
+      "iteration": 8,
+      "timestamp": 1744798155.0998333
+    },
+    {
+      "from_workshop": "分离提纯区",
+      "to_workshop": "原料储存区",
+      "resource_type": "personnel_technician",
+      "amount": 0,
+      "iteration": 9,
+      "timestamp": 1744798155.0998333
+    },
+    {
+      "from_workshop": "公用工程区",
+      "to_workshop": "原料储存区",
+      "resource_type": "personnel_maintenance",
+      "amount": 0,
+      "iteration": 9,
+      "timestamp": 1744798155.0998333
+    },
+    {
+      "from_workshop": "公用工程区",
+      "to_workshop": "反应器区",
+      "resource_type": "personnel_safety",
+      "amount": 0,
+      "iteration": 9,
+      "timestamp": 1744798155.1008337
+    },
+    {
+      "from_workshop": "原料储存区",
+      "to_workshop": "反应器区",
+      "resource_type": "materials",
+      "amount": 0.05,
+      "iteration": 9,
+      "timestamp": 1744798155.1008337
+    },
+    {
+      "from_workshop": "公用工程区",
+      "to_workshop": "分离提纯区",
+      "resource_type": "materials_raw",
+      "amount": 0.05,
+      "iteration": 9,
+      "timestamp": 1744798155.1018336
+    },
+    {
+      "from_workshop": "成品储存区",
+      "to_workshop": "公用工程区",
+      "resource_type": "materials_catalyst",
+      "amount": 0.05,
+      "iteration": 9,
+      "timestamp": 1744798155.1018336
+    },
+    {
+      "from_workshop": "反应器区",
+      "to_workshop": "分离提纯区",
+      "resource_type": "materials_storage",
+      "amount": 0.05,
+      "iteration": 9,
+      "timestamp": 1744798155.1018336
+    },
+    {
+      "from_workshop": "反应器区",
+      "to_workshop": "分离提纯区",
+      "resource_type": "electricity",
+      "amount": 0.05,
+      "iteration": 9,
+      "timestamp": 1744798155.1018336
+    },
+    {
+      "from_workshop": "成品储存区",
+      "to_workshop": "公用工程区",
+      "resource_type": "personnel",
+      "amount": 0,
+      "iteration": 10,
+      "timestamp": 1744798155.1018336
+    },
+    {
+      "from_workshop": "反应器区",
+      "to_workshop": "成品储存区",
+      "resource_type": "materials",
+      "amount": 0.05,
+      "iteration": 10,
+      "timestamp": 1744798155.1028335
+    },
+    {
+      "from_workshop": "成品储存区",
+      "to_workshop": "分离提纯区",
+      "resource_type": "materials_raw",
+      "amount": 0.05,
+      "iteration": 10,
+      "timestamp": 1744798155.1038332
+    },
+    {
+      "from_workshop": "原料储存区",
+      "to_workshop": "反应器区",
+      "resource_type": "materials_catalyst",
+      "amount": 0.05,
+      "iteration": 10,
+      "timestamp": 1744798155.1038332
+    },
+    {
+      "from_workshop": "原料储存区",
+      "to_workshop": "公用工程区",
+      "resource_type": "personnel_maintenance",
+      "amount": 0,
+      "iteration": 11,
+      "timestamp": 1744798155.1048336
+    },
+    {
+      "from_workshop": "成品储存区",
+      "to_workshop": "分离提纯区",
+      "resource_type": "personnel_manager",
+      "amount": 1,
+      "iteration": 11,
+      "timestamp": 1744798155.1048336
+    },
+    {
+      "from_workshop": "反应器区",
+      "to_workshop": "公用工程区",
+      "resource_type": "personnel_safety",
+      "amount": 0,
+      "iteration": 11,
+      "timestamp": 1744798155.105833
+    },
+    {
+      "from_workshop": "成品储存区",
+      "to_workshop": "公用工程区",
+      "resource_type": "materials_raw",
+      "amount": 0.05,
+      "iteration": 11,
+      "timestamp": 1744798155.105833
+    },
+    {
+      "from_workshop": "原料储存区",
+      "to_workshop": "成品储存区",
+      "resource_type": "materials_catalyst",
+      "amount": 0.05,
+      "iteration": 11,
+      "timestamp": 1744798155.105833
+    },
+    {
+      "from_workshop": "原料储存区",
+      "to_workshop": "公用工程区",
+      "resource_type": "materials_storage",
+      "amount": 0.05,
+      "iteration": 11,
+      "timestamp": 1744798155.105833
+    },
+    {
+      "from_workshop": "分离提纯区",
+      "to_workshop": "反应器区",
+      "resource_type": "electricity",
+      "amount": 0.05,
+      "iteration": 11,
+      "timestamp": 1744798155.1068335
+    },
+    {
+      "from_workshop": "公用工程区",
+      "to_workshop": "反应器区",
+      "resource_type": "personnel_safety",
+      "amount": 0,
+      "iteration": 12,
+      "timestamp": 1744798155.1078331
+    },
+    {
+      "from_workshop": "分离提纯区",
+      "to_workshop": "公用工程区",
+      "resource_type": "materials_raw",
+      "amount": 0.05,
+      "iteration": 12,
+      "timestamp": 1744798155.1078331
+    },
+    {
+      "from_workshop": "原料储存区",
+      "to_workshop": "反应器区",
+      "resource_type": "materials_catalyst",
+      "amount": 0.05,
+      "iteration": 12,
+      "timestamp": 1744798155.1078331
+    },
+    {
+      "from_workshop": "成品储存区",
+      "to_workshop": "原料储存区",
+      "resource_type": "materials_storage",
+      "amount": 0.05,
+      "iteration": 12,
+      "timestamp": 1744798155.1078331
+    },
+    {
+      "from_workshop": "分离提纯区",
+      "to_workshop": "成品储存区",
+      "resource_type": "electricity",
+      "amount": 0.05,
+      "iteration": 12,
+      "timestamp": 1744798155.1088336
+    },
+    {
+      "from_workshop": "公用工程区",
+      "to_workshop": "反应器区",
+      "resource_type": "personnel",
+      "amount": 0,
+      "iteration": 13,
+      "timestamp": 1744798155.1088336
+    },
+    {
+      "from_workshop": "公用工程区",
+      "to_workshop": "原料储存区",
+      "resource_type": "personnel_maintenance",
+      "amount": 0,
+      "iteration": 13,
+      "timestamp": 1744798155.1088336
+    },
+    {
+      "from_workshop": "反应器区",
+      "to_workshop": "原料储存区",
+      "resource_type": "personnel_safety",
+      "amount": 0,
+      "iteration": 13,
+      "timestamp": 1744798155.1098335
+    },
+    {
+      "from_workshop": "公用工程区",
+      "to_workshop": "分离提纯区",
+      "resource_type": "materials",
+      "amount": 0.05,
+      "iteration": 13,
+      "timestamp": 1744798155.1098335
+    },
+    {
+      "from_workshop": "反应器区",
+      "to_workshop": "分离提纯区",
+      "resource_type": "materials_raw",
+      "amount": 0.05,
+      "iteration": 13,
+      "timestamp": 1744798155.1098335
+    },
+    {
+      "from_workshop": "原料储存区",
+      "to_workshop": "反应器区",
+      "resource_type": "materials_catalyst",
+      "amount": 0.05,
+      "iteration": 13,
+      "timestamp": 1744798155.1108336
+    },
+    {
+      "from_workshop": "原料储存区",
+      "to_workshop": "公用工程区",
+      "resource_type": "materials_storage",
+      "amount": 0.05,
+      "iteration": 13,
+      "timestamp": 1744798155.1108336
+    },
+    {
+      "from_workshop": "反应器区",
+      "to_workshop": "成品储存区",
+      "resource_type": "electricity",
+      "amount": 0.05,
+      "iteration": 13,
+      "timestamp": 1744798155.1108336
+    },
+    {
+      "from_workshop": "分离提纯区",
+      "to_workshop": "公用工程区",
+      "resource_type": "materials_raw",
+      "amount": 0.05,
+      "iteration": 14,
+      "timestamp": 1744798155.1128335
+    },
+    {
+      "from_workshop": "反应器区",
+      "to_workshop": "原料储存区",
+      "resource_type": "materials_catalyst",
+      "amount": 0.05,
+      "iteration": 14,
+      "timestamp": 1744798155.1128335
+    },
+    {
+      "from_workshop": "成品储存区",
+      "to_workshop": "分离提纯区",
+      "resource_type": "electricity",
+      "amount": 0.05,
+      "iteration": 14,
+      "timestamp": 1744798155.1128335
+    },
+    {
+      "from_workshop": "反应器区",
+      "to_workshop": "公用工程区",
+      "resource_type": "personnel_manager",
+      "amount": 0,
+      "iteration": 15,
+      "timestamp": 1744798155.1138334
+    },
+    {
+      "from_workshop": "成品储存区",
+      "to_workshop": "公用工程区",
+      "resource_type": "materials",
+      "amount": 0.05,
+      "iteration": 15,
+      "timestamp": 1744798155.1138334
+    },
+    {
+      "from_workshop": "反应器区",
+      "to_workshop": "分离提纯区",
+      "resource_type": "materials_raw",
+      "amount": 0.05,
+      "iteration": 15,
+      "timestamp": 1744798155.1148336
+    },
+    {
+      "from_workshop": "反应器区",
+      "to_workshop": "原料储存区",
+      "resource_type": "materials_catalyst",
+      "amount": 0.05,
+      "iteration": 15,
+      "timestamp": 1744798155.1148336
+    },
+    {
+      "from_workshop": "原料储存区",
+      "to_workshop": "成品储存区",
+      "resource_type": "electricity",
+      "amount": 0.05,
+      "iteration": 15,
+      "timestamp": 1744798155.1148336
+    },
+    {
+      "from_workshop": "分离提纯区",
+      "to_workshop": "反应器区",
+      "resource_type": "personnel_manager",
+      "amount": 1,
+      "iteration": 16,
+      "timestamp": 1744798155.1158333
+    },
+    {
+      "from_workshop": "分离提纯区",
+      "to_workshop": "公用工程区",
+      "resource_type": "materials_raw",
+      "amount": 0.05,
+      "iteration": 16,
+      "timestamp": 1744798155.1173751
+    },
+    {
+      "from_workshop": "原料储存区",
+      "to_workshop": "反应器区",
+      "resource_type": "materials_catalyst",
+      "amount": 0.05,
+      "iteration": 16,
+      "timestamp": 1744798155.1173751
+    },
+    {
+      "from_workshop": "分离提纯区",
+      "to_workshop": "成品储存区",
+      "resource_type": "materials_storage",
+      "amount": 0.05,
+      "iteration": 16,
+      "timestamp": 1744798155.1173751
+    },
+    {
+      "from_workshop": "分离提纯区",
+      "to_workshop": "公用工程区",
+      "resource_type": "electricity",
+      "amount": 0.05,
+      "iteration": 16,
+      "timestamp": 1744798155.1173751
+    },
+    {
+      "from_workshop": "公用工程区",
+      "to_workshop": "分离提纯区",
+      "resource_type": "materials_raw",
+      "amount": 0.05,
+      "iteration": 17,
+      "timestamp": 1744798155.1193764
+    },
+    {
+      "from_workshop": "成品储存区",
+      "to_workshop": "公用工程区",
+      "resource_type": "materials_catalyst",
+      "amount": 0.05,
+      "iteration": 17,
+      "timestamp": 1744798155.1193764
+    },
+    {
+      "from_workshop": "原料储存区",
+      "to_workshop": "公用工程区",
+      "resource_type": "materials_storage",
+      "amount": 0.05,
+      "iteration": 17,
+      "timestamp": 1744798155.1193764
+    },
+    {
+      "from_workshop": "原料储存区",
+      "to_workshop": "成品储存区",
+      "resource_type": "electricity",
+      "amount": 0.05,
+      "iteration": 17,
+      "timestamp": 1744798155.1193764
+    },
+    {
+      "from_workshop": "反应器区",
+      "to_workshop": "原料储存区",
+      "resource_type": "personnel",
+      "amount": 0,
+      "iteration": 18,
+      "timestamp": 1744798155.1193764
+    },
+    {
+      "from_workshop": "原料储存区",
+      "to_workshop": "反应器区",
+      "resource_type": "personnel_maintenance",
+      "amount": 0,
+      "iteration": 18,
+      "timestamp": 1744798155.1203766
+    },
+    {
+      "from_workshop": "成品储存区",
+      "to_workshop": "原料储存区",
+      "resource_type": "personnel_safety",
+      "amount": 0,
+      "iteration": 18,
+      "timestamp": 1744798155.1203766
+    },
+    {
+      "from_workshop": "原料储存区",
+      "to_workshop": "反应器区",
+      "resource_type": "materials_raw",
+      "amount": 0.05,
+      "iteration": 18,
+      "timestamp": 1744798155.1213763
+    },
+    {
+      "from_workshop": "原料储存区",
+      "to_workshop": "反应器区",
+      "resource_type": "materials_catalyst",
+      "amount": 0.05,
+      "iteration": 18,
+      "timestamp": 1744798155.1213763
+    },
+    {
+      "from_workshop": "成品储存区",
+      "to_workshop": "原料储存区",
+      "resource_type": "materials_storage",
+      "amount": 0.05,
+      "iteration": 18,
+      "timestamp": 1744798155.1213763
+    },
+    {
+      "from_workshop": "反应器区",
+      "to_workshop": "分离提纯区",
+      "resource_type": "electricity",
+      "amount": 0.05,
+      "iteration": 18,
+      "timestamp": 1744798155.1213763
+    },
+    {
+      "from_workshop": "反应器区",
+      "to_workshop": "原料储存区",
+      "resource_type": "personnel_manager",
+      "amount": 1,
+      "iteration": 19,
+      "timestamp": 1744798155.1233768
+    },
+    {
+      "from_workshop": "原料储存区",
+      "to_workshop": "公用工程区",
+      "resource_type": "personnel_safety",
+      "amount": 1,
+      "iteration": 19,
+      "timestamp": 1744798155.1233768
+    },
+    {
+      "from_workshop": "成品储存区",
+      "to_workshop": "公用工程区",
+      "resource_type": "materials",
+      "amount": 0.05,
+      "iteration": 19,
+      "timestamp": 1744798155.1233768
+    },
+    {
+      "from_workshop": "公用工程区",
+      "to_workshop": "分离提纯区",
+      "resource_type": "materials_raw",
+      "amount": 0.05,
+      "iteration": 19,
+      "timestamp": 1744798155.1233768
+    },
+    {
+      "from_workshop": "原料储存区",
+      "to_workshop": "反应器区",
+      "resource_type": "materials_catalyst",
+      "amount": 0.05,
+      "iteration": 19,
+      "timestamp": 1744798155.1243765
+    },
+    {
+      "from_workshop": "原料储存区",
+      "to_workshop": "分离提纯区",
+      "resource_type": "materials_storage",
+      "amount": 0.05,
+      "iteration": 19,
+      "timestamp": 1744798155.1243765
+    },
+    {
+      "from_workshop": "原料储存区",
+      "to_workshop": "公用工程区",
+      "resource_type": "electricity",
+      "amount": 0.05,
+      "iteration": 19,
+      "timestamp": 1744798155.1243765
+    },
+    {
+      "from_workshop": "分离提纯区",
+      "to_workshop": "原料储存区",
+      "resource_type": "materials_raw",
+      "amount": 0.05,
+      "iteration": 20,
+      "timestamp": 1744798155.1263764
+    },
+    {
+      "from_workshop": "原料储存区",
+      "to_workshop": "成品储存区",
+      "resource_type": "materials_catalyst",
+      "amount": 0.05,
+      "iteration": 20,
+      "timestamp": 1744798155.1263764
+    },
+    {
+      "from_workshop": "公用工程区",
+      "to_workshop": "原料储存区",
+      "resource_type": "materials_storage",
+      "amount": 0.05,
+      "iteration": 20,
+      "timestamp": 1744798155.1263764
+    },
+    {
+      "from_workshop": "原料储存区",
+      "to_workshop": "公用工程区",
+      "resource_type": "electricity",
+      "amount": 0.05,
+      "iteration": 20,
+      "timestamp": 1744798155.1263764
+    },
+    {
+      "from_workshop": "原料储存区",
+      "to_workshop": "成品储存区",
+      "resource_type": "personnel_manager",
+      "amount": 1,
+      "iteration": 21,
+      "timestamp": 1744798155.127376
+    },
+    {
+      "from_workshop": "分离提纯区",
+      "to_workshop": "原料储存区",
+      "resource_type": "materials_raw",
+      "amount": 0.05,
+      "iteration": 21,
+      "timestamp": 1744798155.128376
+    },
+    {
+      "from_workshop": "原料储存区",
+      "to_workshop": "公用工程区",
+      "resource_type": "materials_storage",
+      "amount": 0.05,
+      "iteration": 21,
+      "timestamp": 1744798155.128376
+    },
+    {
+      "from_workshop": "分离提纯区",
+      "to_workshop": "成品储存区",
+      "resource_type": "electricity",
+      "amount": 0.05,
+      "iteration": 21,
+      "timestamp": 1744798155.128376
+    },
+    {
+      "from_workshop": "原料储存区",
+      "to_workshop": "反应器区",
+      "resource_type": "materials_raw",
+      "amount": 0.05,
+      "iteration": 22,
+      "timestamp": 1744798155.1303768
+    },
+    {
+      "from_workshop": "反应器区",
+      "to_workshop": "原料储存区",
+      "resource_type": "materials_catalyst",
+      "amount": 0.05,
+      "iteration": 22,
+      "timestamp": 1744798155.1303768
+    },
+    {
+      "from_workshop": "原料储存区",
+      "to_workshop": "公用工程区",
+      "resource_type": "materials_storage",
+      "amount": 0.05,
+      "iteration": 22,
+      "timestamp": 1744798155.1303768
+    },
+    {
+      "from_workshop": "成品储存区",
+      "to_workshop": "公用工程区",
+      "resource_type": "personnel_technician",
+      "amount": 0,
+      "iteration": 23,
+      "timestamp": 1744798155.1313767
+    },
+    {
+      "from_workshop": "反应器区",
+      "to_workshop": "公用工程区",
+      "resource_type": "personnel_operator",
+      "amount": 1,
+      "iteration": 23,
+      "timestamp": 1744798155.1323767
+    },
+    {
+      "from_workshop": "公用工程区",
+      "to_workshop": "分离提纯区",
+      "resource_type": "materials_raw",
+      "amount": 0.05,
+      "iteration": 23,
+      "timestamp": 1744798155.1333764
+    },
+    {
+      "from_workshop": "反应器区",
+      "to_workshop": "原料储存区",
+      "resource_type": "materials_catalyst",
+      "amount": 0.05,
+      "iteration": 23,
+      "timestamp": 1744798155.1333764
+    },
+    {
+      "from_workshop": "分离提纯区",
+      "to_workshop": "成品储存区",
+      "resource_type": "materials_storage",
+      "amount": 0.05,
+      "iteration": 23,
+      "timestamp": 1744798155.1333764
+    },
+    {
+      "from_workshop": "公用工程区",
+      "to_workshop": "分离提纯区",
+      "resource_type": "materials_raw",
+      "amount": 0.05,
+      "iteration": 24,
+      "timestamp": 1744798155.1363764
+    },
+    {
+      "from_workshop": "成品储存区",
+      "to_workshop": "公用工程区",
+      "resource_type": "materials_catalyst",
+      "amount": 0.05,
+      "iteration": 24,
+      "timestamp": 1744798155.1363764
+    },
+    {
+      "from_workshop": "成品储存区",
+      "to_workshop": "公用工程区",
+      "resource_type": "electricity",
+      "amount": 0.05,
+      "iteration": 24,
+      "timestamp": 1744798155.1363764
+    },
+    {
+      "from_workshop": "公用工程区",
+      "to_workshop": "原料储存区",
+      "resource_type": "personnel_technician",
+      "amount": 0,
+      "iteration": 25,
+      "timestamp": 1744798155.1373777
+    },
+    {
+      "from_workshop": "公用工程区",
+      "to_workshop": "原料储存区",
+      "resource_type": "personnel_operator",
+      "amount": 1,
+      "iteration": 25,
+      "timestamp": 1744798155.1373777
+    },
+    {
+      "from_workshop": "公用工程区",
+      "to_workshop": "分离提纯区",
+      "resource_type": "materials_raw",
+      "amount": 0.05,
+      "iteration": 25,
+      "timestamp": 1744798155.1383774
+    },
+    {
+      "from_workshop": "原料储存区",
+      "to_workshop": "成品储存区",
+      "resource_type": "materials_catalyst",
+      "amount": 0.05,
+      "iteration": 25,
+      "timestamp": 1744798155.1383774
+    },
+    {
+      "from_workshop": "成品储存区",
+      "to_workshop": "公用工程区",
+      "resource_type": "electricity",
+      "amount": 0.05,
+      "iteration": 25,
+      "timestamp": 1744798155.1383774
+    },
+    {
+      "from_workshop": "公用工程区",
+      "to_workshop": "分离提纯区",
+      "resource_type": "personnel_manager",
+      "amount": 0,
+      "iteration": 26,
+      "timestamp": 1744798155.1393774
+    },
+    {
+      "from_workshop": "成品储存区",
+      "to_workshop": "公用工程区",
+      "resource_type": "materials_catalyst",
+      "amount": 0.05,
+      "iteration": 26,
+      "timestamp": 1744798155.1403778
+    },
+    {
+      "from_workshop": "分离提纯区",
+      "to_workshop": "反应器区",
+      "resource_type": "personnel_manager",
+      "amount": 0,
+      "iteration": 27,
+      "timestamp": 1744798155.142378
+    },
+    {
+      "from_workshop": "成品储存区",
+      "to_workshop": "反应器区",
+      "resource_type": "personnel_operator",
+      "amount": 0,
+      "iteration": 27,
+      "timestamp": 1744798155.142378
+    },
+    {
+      "from_workshop": "分离提纯区",
+      "to_workshop": "公用工程区",
+      "resource_type": "materials_raw",
+      "amount": 0.05,
+      "iteration": 27,
+      "timestamp": 1744798155.142378
+    },
+    {
+      "from_workshop": "分离提纯区",
+      "to_workshop": "原料储存区",
+      "resource_type": "materials_catalyst",
+      "amount": 0.05,
+      "iteration": 27,
+      "timestamp": 1744798155.142378
+    },
+    {
+      "from_workshop": "原料储存区",
+      "to_workshop": "公用工程区",
+      "resource_type": "materials_storage",
+      "amount": 0.05,
+      "iteration": 27,
+      "timestamp": 1744798155.143378
+    },
+    {
+      "from_workshop": "分离提纯区",
+      "to_workshop": "公用工程区",
+      "resource_type": "electricity",
+      "amount": 0.05,
+      "iteration": 27,
+      "timestamp": 1744798155.143378
+    },
+    {
+      "from_workshop": "成品储存区",
+      "to_workshop": "公用工程区",
+      "resource_type": "materials",
+      "amount": 0.05,
+      "iteration": 28,
+      "timestamp": 1744798155.1443777
+    },
+    {
+      "from_workshop": "成品储存区",
+      "to_workshop": "原料储存区",
+      "resource_type": "materials_raw",
+      "amount": 0.05,
+      "iteration": 28,
+      "timestamp": 1744798155.1443777
+    },
+    {
+      "from_workshop": "反应器区",
+      "to_workshop": "公用工程区",
+      "resource_type": "materials_catalyst",
+      "amount": 0.05,
+      "iteration": 28,
+      "timestamp": 1744798155.1453774
+    },
+    {
+      "from_workshop": "反应器区",
+      "to_workshop": "分离提纯区",
+      "resource_type": "electricity",
+      "amount": 0.05,
+      "iteration": 28,
+      "timestamp": 1744798155.1453774
+    },
+    {
+      "from_workshop": "反应器区",
+      "to_workshop": "原料储存区",
+      "resource_type": "personnel_manager",
+      "amount": 0,
+      "iteration": 29,
+      "timestamp": 1744798155.1463773
+    },
+    {
+      "from_workshop": "公用工程区",
+      "to_workshop": "成品储存区",
+      "resource_type": "materials",
+      "amount": 0.05,
+      "iteration": 29,
+      "timestamp": 1744798155.1463773
+    },
+    {
+      "from_workshop": "原料储存区",
+      "to_workshop": "成品储存区",
+      "resource_type": "materials_raw",
+      "amount": 0.05,
+      "iteration": 29,
+      "timestamp": 1744798155.1463773
+    },
+    {
+      "from_workshop": "原料储存区",
+      "to_workshop": "反应器区",
+      "resource_type": "materials_catalyst",
+      "amount": 0.05,
+      "iteration": 29,
+      "timestamp": 1744798155.1473775
+    },
+    {
+      "from_workshop": "分离提纯区",
+      "to_workshop": "公用工程区",
+      "resource_type": "electricity",
+      "amount": 0.05,
+      "iteration": 29,
+      "timestamp": 1744798155.1473775
+    },
+    {
+      "from_workshop": "反应器区",
+      "to_workshop": "成品储存区",
+      "resource_type": "materials",
+      "amount": 0.05,
+      "iteration": 30,
+      "timestamp": 1744798155.1493778
+    },
+    {
+      "from_workshop": "分离提纯区",
+      "to_workshop": "公用工程区",
+      "resource_type": "materials_raw",
+      "amount": 0.05,
+      "iteration": 30,
+      "timestamp": 1744798155.1493778
+    },
+    {
+      "from_workshop": "原料储存区",
+      "to_workshop": "反应器区",
+      "resource_type": "materials_catalyst",
+      "amount": 0.05,
+      "iteration": 30,
+      "timestamp": 1744798155.1493778
+    },
+    {
+      "from_workshop": "成品储存区",
+      "to_workshop": "原料储存区",
+      "resource_type": "materials_storage",
+      "amount": 0.05,
+      "iteration": 30,
+      "timestamp": 1744798155.150378
+    },
+    {
+      "from_workshop": "反应器区",
+      "to_workshop": "原料储存区",
+      "resource_type": "personnel_maintenance",
+      "amount": 1,
+      "iteration": 31,
+      "timestamp": 1744798155.150378
+    },
+    {
+      "from_workshop": "反应器区",
+      "to_workshop": "分离提纯区",
+      "resource_type": "personnel_operator",
+      "amount": 0,
+      "iteration": 31,
+      "timestamp": 1744798155.150378
+    },
+    {
+      "from_workshop": "公用工程区",
+      "to_workshop": "反应器区",
+      "resource_type": "personnel_safety",
+      "amount": 1,
+      "iteration": 31,
+      "timestamp": 1744798155.150378
+    },
+    {
+      "from_workshop": "原料储存区",
+      "to_workshop": "成品储存区",
+      "resource_type": "materials_raw",
+      "amount": 0.05,
+      "iteration": 31,
+      "timestamp": 1744798155.1518824
+    },
+    {
+      "from_workshop": "反应器区",
+      "to_workshop": "成品储存区",
+      "resource_type": "materials_catalyst",
+      "amount": 0.05,
+      "iteration": 31,
+      "timestamp": 1744798155.1518824
+    },
+    {
+      "from_workshop": "原料储存区",
+      "to_workshop": "公用工程区",
+      "resource_type": "materials_storage",
+      "amount": 0.05,
+      "iteration": 31,
+      "timestamp": 1744798155.1518824
+    },
+    {
+      "from_workshop": "反应器区",
+      "to_workshop": "公用工程区",
+      "resource_type": "personnel_safety",
+      "amount": 1,
+      "iteration": 32,
+      "timestamp": 1744798155.152884
+    },
+    {
+      "from_workshop": "原料储存区",
+      "to_workshop": "反应器区",
+      "resource_type": "materials_raw",
+      "amount": 0.05,
+      "iteration": 32,
+      "timestamp": 1744798155.1538835
+    },
+    {
+      "from_workshop": "成品储存区",
+      "to_workshop": "公用工程区",
+      "resource_type": "personnel_manager",
+      "amount": 1,
+      "iteration": 33,
+      "timestamp": 1744798155.1558838
+    },
+    {
+      "from_workshop": "成品储存区",
+      "to_workshop": "公用工程区",
+      "resource_type": "materials",
+      "amount": 0.05,
+      "iteration": 33,
+      "timestamp": 1744798155.1558838
+    },
+    {
+      "from_workshop": "公用工程区",
+      "to_workshop": "分离提纯区",
+      "resource_type": "materials_raw",
+      "amount": 0.05,
+      "iteration": 33,
+      "timestamp": 1744798155.1558838
+    },
+    {
+      "from_workshop": "成品储存区",
+      "to_workshop": "公用工程区",
+      "resource_type": "electricity",
+      "amount": 0.05,
+      "iteration": 33,
+      "timestamp": 1744798155.156884
+    },
+    {
+      "from_workshop": "分离提纯区",
+      "to_workshop": "反应器区",
+      "resource_type": "personnel_operator",
+      "amount": 0,
+      "iteration": 34,
+      "timestamp": 1744798155.157884
+    },
+    {
+      "from_workshop": "公用工程区",
+      "to_workshop": "分离提纯区",
+      "resource_type": "materials_raw",
+      "amount": 0.05,
+      "iteration": 34,
+      "timestamp": 1744798155.157884
+    },
+    {
+      "from_workshop": "原料储存区",
+      "to_workshop": "成品储存区",
+      "resource_type": "personnel_manager",
+      "amount": 0,
+      "iteration": 35,
+      "timestamp": 1744798155.1598835
+    },
+    {
+      "from_workshop": "分离提纯区",
+      "to_workshop": "原料储存区",
+      "resource_type": "materials_raw",
+      "amount": 0.05,
+      "iteration": 35,
+      "timestamp": 1744798155.160884
+    },
+    {
+      "from_workshop": "反应器区",
+      "to_workshop": "公用工程区",
+      "resource_type": "materials_catalyst",
+      "amount": 0.05,
+      "iteration": 35,
+      "timestamp": 1744798155.160884
+    },
+    {
+      "from_workshop": "成品储存区",
+      "to_workshop": "分离提纯区",
+      "resource_type": "personnel_manager",
+      "amount": 0,
+      "iteration": 36,
+      "timestamp": 1744798155.1618838
+    },
+    {
+      "from_workshop": "原料储存区",
+      "to_workshop": "成品储存区",
+      "resource_type": "personnel_operator",
+      "amount": 1,
+      "iteration": 36,
+      "timestamp": 1744798155.1628838
+    },
+    {
+      "from_workshop": "成品储存区",
+      "to_workshop": "原料储存区",
+      "resource_type": "materials_raw",
+      "amount": 0.05,
+      "iteration": 36,
+      "timestamp": 1744798155.1628838
+    },
+    {
+      "from_workshop": "反应器区",
+      "to_workshop": "公用工程区",
+      "resource_type": "materials_catalyst",
+      "amount": 0.05,
+      "iteration": 36,
+      "timestamp": 1744798155.1628838
+    },
+    {
+      "from_workshop": "原料储存区",
+      "to_workshop": "反应器区",
+      "resource_type": "personnel_maintenance",
+      "amount": 1,
+      "iteration": 37,
+      "timestamp": 1744798155.1638837
+    },
+    {
+      "from_workshop": "成品储存区",
+      "to_workshop": "公用工程区",
+      "resource_type": "materials_raw",
+      "amount": 0.05,
+      "iteration": 37,
+      "timestamp": 1744798155.1648843
+    },
+    {
+      "from_workshop": "反应器区",
+      "to_workshop": "分离提纯区",
+      "resource_type": "personnel_maintenance",
+      "amount": 1,
+      "iteration": 38,
+      "timestamp": 1744798155.1668842
+    },
+    {
+      "from_workshop": "分离提纯区",
+      "to_workshop": "原料储存区",
+      "resource_type": "personnel_manager",
+      "amount": 0,
+      "iteration": 38,
+      "timestamp": 1744798155.1668842
+    },
+    {
+      "from_workshop": "反应器区",
+      "to_workshop": "成品储存区",
+      "resource_type": "materials_raw",
+      "amount": 0.05,
+      "iteration": 38,
+      "timestamp": 1744798155.167884
+    },
+    {
+      "from_workshop": "分离提纯区",
+      "to_workshop": "公用工程区",
+      "resource_type": "materials_raw",
+      "amount": 0.05,
+      "iteration": 39,
+      "timestamp": 1744798155.1708837
+    },
+    {
+      "from_workshop": "反应器区",
+      "to_workshop": "公用工程区",
+      "resource_type": "materials_catalyst",
+      "amount": 0.05,
+      "iteration": 39,
+      "timestamp": 1744798155.1718843
+    },
+    {
+      "from_workshop": "反应器区",
+      "to_workshop": "分离提纯区",
+      "resource_type": "materials_raw",
+      "amount": 0.05,
+      "iteration": 40,
+      "timestamp": 1744798155.1748848
+    },
+    {
+      "from_workshop": "成品储存区",
+      "to_workshop": "原料储存区",
+      "resource_type": "materials_catalyst",
+      "amount": 0.05,
+      "iteration": 40,
+      "timestamp": 1744798155.1748848
+    },
+    {
+      "from_workshop": "公用工程区",
+      "to_workshop": "成品储存区",
+      "resource_type": "materials",
+      "amount": 0.05,
+      "iteration": 41,
+      "timestamp": 1744798155.175885
+    },
+    {
+      "from_workshop": "成品储存区",
+      "to_workshop": "原料储存区",
+      "resource_type": "materials_raw",
+      "amount": 0.05,
+      "iteration": 41,
+      "timestamp": 1744798155.176885
+    },
+    {
+      "from_workshop": "原料储存区",
+      "to_workshop": "成品储存区",
+      "resource_type": "materials_catalyst",
+      "amount": 0.05,
+      "iteration": 41,
+      "timestamp": 1744798155.176885
+    },
+    {
+      "from_workshop": "原料储存区",
+      "to_workshop": "公用工程区",
+      "resource_type": "materials_raw",
+      "amount": 0.05,
+      "iteration": 42,
+      "timestamp": 1744798155.1788852
+    },
+    {
+      "from_workshop": "分离提纯区",
+      "to_workshop": "反应器区",
+      "resource_type": "personnel_maintenance",
+      "amount": 1,
+      "iteration": 43,
+      "timestamp": 1744798155.1808856
+    },
+    {
+      "from_workshop": "分离提纯区",
+      "to_workshop": "原料储存区",
+      "resource_type": "materials_raw",
+      "amount": 0.05,
+      "iteration": 43,
+      "timestamp": 1744798155.1818855
+    },
+    {
+      "from_workshop": "反应器区",
+      "to_workshop": "公用工程区",
+      "resource_type": "materials_catalyst",
+      "amount": 0.05,
+      "iteration": 43,
+      "timestamp": 1744798155.1818855
+    },
+    {
+      "from_workshop": "原料储存区",
+      "to_workshop": "成品储存区",
+      "resource_type": "personnel_manager",
+      "amount": 0,
+      "iteration": 44,
+      "timestamp": 1744798155.1828854
+    },
+    {
+      "from_workshop": "分离提纯区",
+      "to_workshop": "原料储存区",
+      "resource_type": "materials_raw",
+      "amount": 0.05,
+      "iteration": 44,
+      "timestamp": 1744798155.183885
+    },
+    {
+      "from_workshop": "反应器区",
+      "to_workshop": "公用工程区",
+      "resource_type": "materials_catalyst",
+      "amount": 0.05,
+      "iteration": 44,
+      "timestamp": 1744798155.183885
+    },
+    {
+      "from_workshop": "公用工程区",
+      "to_workshop": "分离提纯区",
+      "resource_type": "personnel_manager",
+      "amount": 1,
+      "iteration": 45,
+      "timestamp": 1744798155.1858852
+    },
+    {
+      "from_workshop": "分离提纯区",
+      "to_workshop": "原料储存区",
+      "resource_type": "materials_raw",
+      "amount": 0.05,
+      "iteration": 45,
+      "timestamp": 1744798155.186885
+    },
+    {
+      "from_workshop": "分离提纯区",
+      "to_workshop": "反应器区",
+      "resource_type": "personnel_manager",
+      "amount": 1,
+      "iteration": 46,
+      "timestamp": 1744798155.188885
+    },
+    {
+      "from_workshop": "公用工程区",
+      "to_workshop": "反应器区",
+      "resource_type": "personnel_safety",
+      "amount": 1,
+      "iteration": 46,
+      "timestamp": 1744798155.188885
+    },
+    {
+      "from_workshop": "分离提纯区",
+      "to_workshop": "公用工程区",
+      "resource_type": "materials_raw",
+      "amount": 0.05,
+      "iteration": 46,
+      "timestamp": 1744798155.1893897
+    },
+    {
+      "from_workshop": "分离提纯区",
+      "to_workshop": "成品储存区",
+      "resource_type": "materials_storage",
+      "amount": 0.05,
+      "iteration": 46,
+      "timestamp": 1744798155.1899111
+    },
+    {
+      "from_workshop": "反应器区",
+      "to_workshop": "公用工程区",
+      "resource_type": "personnel_safety",
+      "amount": 1,
+      "iteration": 47,
+      "timestamp": 1744798155.1909127
+    },
+    {
+      "from_workshop": "成品储存区",
+      "to_workshop": "原料储存区",
+      "resource_type": "materials_raw",
+      "amount": 0.05,
+      "iteration": 47,
+      "timestamp": 1744798155.1919124
+    },
+    {
+      "from_workshop": "反应器区",
+      "to_workshop": "公用工程区",
+      "resource_type": "electricity",
+      "amount": 0.05,
+      "iteration": 47,
+      "timestamp": 1744798155.1929128
+    },
+    {
+      "from_workshop": "成品储存区",
+      "to_workshop": "公用工程区",
+      "resource_type": "personnel_manager",
+      "amount": 0,
+      "iteration": 48,
+      "timestamp": 1744798155.1929128
+    },
+    {
+      "from_workshop": "公用工程区",
+      "to_workshop": "成品储存区",
+      "resource_type": "materials",
+      "amount": 0.05,
+      "iteration": 48,
+      "timestamp": 1744798155.1939125
+    },
+    {
+      "from_workshop": "原料储存区",
+      "to_workshop": "成品储存区",
+      "resource_type": "materials_raw",
+      "amount": 0.05,
+      "iteration": 48,
+      "timestamp": 1744798155.1939125
+    },
+    {
+      "from_workshop": "成品储存区",
+      "to_workshop": "分离提纯区",
+      "resource_type": "materials_storage",
+      "amount": 0.05,
+      "iteration": 48,
+      "timestamp": 1744798155.1939125
+    },
+    {
+      "from_workshop": "公用工程区",
+      "to_workshop": "成品储存区",
+      "resource_type": "materials",
+      "amount": 0.05,
+      "iteration": 49,
+      "timestamp": 1744798155.196632
+    },
+    {
+      "from_workshop": "分离提纯区",
+      "to_workshop": "公用工程区",
+      "resource_type": "materials_raw",
+      "amount": 0.05,
+      "iteration": 49,
+      "timestamp": 1744798155.196632
+    },
+    {
+      "from_workshop": "反应器区",
+      "to_workshop": "分离提纯区",
+      "resource_type": "personnel_maintenance",
+      "amount": 1,
+      "iteration": 50,
+      "timestamp": 1744798155.1976316
+    },
+    {
+      "from_workshop": "反应器区",
+      "to_workshop": "分离提纯区",
+      "resource_type": "materials_raw",
+      "amount": 0.05,
+      "iteration": 50,
+      "timestamp": 1744798155.1986315
+    },
+    {
+      "from_workshop": "成品储存区",
+      "to_workshop": "公用工程区",
+      "resource_type": "materials",
+      "amount": 0.05,
+      "iteration": 51,
+      "timestamp": 1744798155.2006316
+    },
+    {
+      "from_workshop": "分离提纯区",
+      "to_workshop": "公用工程区",
+      "resource_type": "materials_raw",
+      "amount": 0.05,
+      "iteration": 51,
+      "timestamp": 1744798155.2016315
+    },
+    {
+      "from_workshop": "成品储存区",
+      "to_workshop": "公用工程区",
+      "resource_type": "materials",
+      "amount": 0.05,
+      "iteration": 52,
+      "timestamp": 1744798155.2036316
+    },
+    {
+      "from_workshop": "分离提纯区",
+      "to_workshop": "原料储存区",
+      "resource_type": "materials_raw",
+      "amount": 0.05,
+      "iteration": 52,
+      "timestamp": 1744798155.2046316
+    },
+    {
+      "from_workshop": "成品储存区",
+      "to_workshop": "分离提纯区",
+      "resource_type": "personnel_operator",
+      "amount": 1,
+      "iteration": 53,
+      "timestamp": 1744798155.2066317
+    },
+    {
+      "from_workshop": "公用工程区",
+      "to_workshop": "成品储存区",
+      "resource_type": "materials",
+      "amount": 0.05,
+      "iteration": 53,
+      "timestamp": 1744798155.2076316
+    },
+    {
+      "from_workshop": "反应器区",
+      "to_workshop": "分离提纯区",
+      "resource_type": "materials_raw",
+      "amount": 0.05,
+      "iteration": 53,
+      "timestamp": 1744798155.2076316
+    },
+    {
+      "from_workshop": "成品储存区",
+      "to_workshop": "公用工程区",
+      "resource_type": "electricity",
+      "amount": 0.05,
+      "iteration": 53,
+      "timestamp": 1744798155.2086318
+    },
+    {
+      "from_workshop": "反应器区",
+      "to_workshop": "成品储存区",
+      "resource_type": "materials",
+      "amount": 0.05,
+      "iteration": 54,
+      "timestamp": 1744798155.2106316
+    },
+    {
+      "from_workshop": "分离提纯区",
+      "to_workshop": "原料储存区",
+      "resource_type": "materials_raw",
+      "amount": 0.05,
+      "iteration": 54,
+      "timestamp": 1744798155.2106316
+    },
+    {
+      "from_workshop": "分离提纯区",
+      "to_workshop": "反应器区",
+      "resource_type": "materials_storage",
+      "amount": 0.05,
+      "iteration": 55,
+      "timestamp": 1744798155.2136316
+    },
+    {
+      "from_workshop": "分离提纯区",
+      "to_workshop": "成品储存区",
+      "resource_type": "materials_raw",
+      "amount": 0.05,
+      "iteration": 56,
+      "timestamp": 1744798155.2156317
+    },
+    {
+      "from_workshop": "分离提纯区",
+      "to_workshop": "反应器区",
+      "resource_type": "materials",
+      "amount": 0.05,
+      "iteration": 57,
+      "timestamp": 1744798155.2186317
+    },
+    {
+      "from_workshop": "公用工程区",
+      "to_workshop": "分离提纯区",
+      "resource_type": "materials_raw",
+      "amount": 0.05,
+      "iteration": 57,
+      "timestamp": 1744798155.2186317
+    },
+    {
+      "from_workshop": "反应器区",
+      "to_workshop": "原料储存区",
+      "resource_type": "materials_storage",
+      "amount": 0.05,
+      "iteration": 57,
+      "timestamp": 1744798155.2196317
+    },
+    {
+      "from_workshop": "原料储存区",
+      "to_workshop": "分离提纯区",
+      "resource_type": "personnel",
+      "amount": 1,
+      "iteration": 58,
+      "timestamp": 1744798155.2196317
+    },
+    {
+      "from_workshop": "反应器区",
+      "to_workshop": "原料储存区",
+      "resource_type": "personnel_manager",
+      "amount": 1,
+      "iteration": 58,
+      "timestamp": 1744798155.2206318
+    },
+    {
+      "from_workshop": "公用工程区",
+      "to_workshop": "成品储存区",
+      "resource_type": "materials",
+      "amount": 0.05,
+      "iteration": 58,
+      "timestamp": 1744798155.2206318
+    },
+    {
+      "from_workshop": "公用工程区",
+      "to_workshop": "分离提纯区",
+      "resource_type": "materials_raw",
+      "amount": 0.05,
+      "iteration": 58,
+      "timestamp": 1744798155.2206318
+    },
+    {
+      "from_workshop": "分离提纯区",
+      "to_workshop": "反应器区",
+      "resource_type": "personnel",
+      "amount": 1,
+      "iteration": 59,
+      "timestamp": 1744798155.221632
+    },
+    {
+      "from_workshop": "原料储存区",
+      "to_workshop": "成品储存区",
+      "resource_type": "personnel_manager",
+      "amount": 1,
+      "iteration": 59,
+      "timestamp": 1744798155.2226317
+    },
+    {
+      "from_workshop": "公用工程区",
+      "to_workshop": "反应器区",
+      "resource_type": "materials_raw",
+      "amount": 0.05,
+      "iteration": 59,
+      "timestamp": 1744798155.2236319
+    },
+    {
+      "from_workshop": "反应器区",
+      "to_workshop": "分离提纯区",
+      "resource_type": "materials_raw",
+      "amount": 0.05,
+      "iteration": 60,
+      "timestamp": 1744798155.226218
+    },
+    {
+      "from_workshop": "原料储存区",
+      "to_workshop": "公用工程区",
+      "resource_type": "materials_storage",
+      "amount": 0.05,
+      "iteration": 60,
+      "timestamp": 1744798155.226218
+    },
+    {
+      "from_workshop": "分离提纯区",
+      "to_workshop": "反应器区",
+      "resource_type": "personnel_maintenance",
+      "amount": 1,
+      "iteration": 61,
+      "timestamp": 1744798155.2272205
+    },
+    {
+      "from_workshop": "成品储存区",
+      "to_workshop": "原料储存区",
+      "resource_type": "materials_raw",
+      "amount": 0.05,
+      "iteration": 61,
+      "timestamp": 1744798155.2292202
+    },
+    {
+      "from_workshop": "反应器区",
+      "to_workshop": "公用工程区",
+      "resource_type": "personnel_operator",
+      "amount": 0,
+      "iteration": 62,
+      "timestamp": 1744798155.2312205
+    },
+    {
+      "from_workshop": "分离提纯区",
+      "to_workshop": "原料储存区",
+      "resource_type": "materials_raw",
+      "amount": 0.05,
+      "iteration": 62,
+      "timestamp": 1744798155.2312205
+    },
+    {
+      "from_workshop": "成品储存区",
+      "to_workshop": "公用工程区",
+      "resource_type": "materials_catalyst",
+      "amount": 0.05,
+      "iteration": 62,
+      "timestamp": 1744798155.23222
+    },
+    {
+      "from_workshop": "反应器区",
+      "to_workshop": "成品储存区",
+      "resource_type": "materials",
+      "amount": 0.05,
+      "iteration": 63,
+      "timestamp": 1744798155.2332203
+    },
+    {
+      "from_workshop": "分离提纯区",
+      "to_workshop": "成品储存区",
+      "resource_type": "materials_raw",
+      "amount": 0.05,
+      "iteration": 63,
+      "timestamp": 1744798155.2332203
+    },
+    {
+      "from_workshop": "成品储存区",
+      "to_workshop": "公用工程区",
+      "resource_type": "materials_catalyst",
+      "amount": 0.05,
+      "iteration": 63,
+      "timestamp": 1744798155.2342198
+    },
+    {
+      "from_workshop": "分离提纯区",
+      "to_workshop": "反应器区",
+      "resource_type": "personnel_operator",
+      "amount": 1,
+      "iteration": 64,
+      "timestamp": 1744798155.2352202
+    },
+    {
+      "from_workshop": "成品储存区",
+      "to_workshop": "公用工程区",
+      "resource_type": "materials",
+      "amount": 0.05,
+      "iteration": 64,
+      "timestamp": 1744798155.2362204
+    },
+    {
+      "from_workshop": "分离提纯区",
+      "to_workshop": "原料储存区",
+      "resource_type": "materials_raw",
+      "amount": 0.05,
+      "iteration": 64,
+      "timestamp": 1744798155.2362204
+    },
+    {
+      "from_workshop": "原料储存区",
+      "to_workshop": "反应器区",
+      "resource_type": "materials_raw",
+      "amount": 0.05,
+      "iteration": 65,
+      "timestamp": 1744798155.2392216
+    },
+    {
+      "from_workshop": "公用工程区",
+      "to_workshop": "原料储存区",
+      "resource_type": "materials_storage",
+      "amount": 0.05,
+      "iteration": 65,
+      "timestamp": 1744798155.2392216
+    },
+    {
+      "from_workshop": "反应器区",
+      "to_workshop": "成品储存区",
+      "resource_type": "personnel",
+      "amount": 1,
+      "iteration": 66,
+      "timestamp": 1744798155.2402217
+    },
+    {
+      "from_workshop": "公用工程区",
+      "to_workshop": "成品储存区",
+      "resource_type": "materials",
+      "amount": 0.05,
+      "iteration": 66,
+      "timestamp": 1744798155.242222
+    },
+    {
+      "from_workshop": "成品储存区",
+      "to_workshop": "原料储存区",
+      "resource_type": "materials_raw",
+      "amount": 0.05,
+      "iteration": 66,
+      "timestamp": 1744798155.242222
+    },
+    {
+      "from_workshop": "公用工程区",
+      "to_workshop": "反应器区",
+      "resource_type": "personnel_manager",
+      "amount": 0,
+      "iteration": 67,
+      "timestamp": 1744798155.244222
+    },
+    {
+      "from_workshop": "原料储存区",
+      "to_workshop": "反应器区",
+      "resource_type": "materials_raw",
+      "amount": 0.05,
+      "iteration": 67,
+      "timestamp": 1744798155.2452219
+    },
+    {
+      "from_workshop": "公用工程区",
+      "to_workshop": "反应器区",
+      "resource_type": "materials_catalyst",
+      "amount": 0.05,
+      "iteration": 67,
+      "timestamp": 1744798155.2452219
+    },
+    {
+      "from_workshop": "原料储存区",
+      "to_workshop": "公用工程区",
+      "resource_type": "materials_storage",
+      "amount": 0.05,
+      "iteration": 67,
+      "timestamp": 1744798155.2462218
+    },
+    {
+      "from_workshop": "公用工程区",
+      "to_workshop": "分离提纯区",
+      "resource_type": "personnel_operator",
+      "amount": 0,
+      "iteration": 68,
+      "timestamp": 1744798155.2472217
+    },
+    {
+      "from_workshop": "成品储存区",
+      "to_workshop": "公用工程区",
+      "resource_type": "materials",
+      "amount": 0.05,
+      "iteration": 68,
+      "timestamp": 1744798155.2472217
+    },
+    {
+      "from_workshop": "成品储存区",
+      "to_workshop": "原料储存区",
+      "resource_type": "materials_raw",
+      "amount": 0.05,
+      "iteration": 68,
+      "timestamp": 1744798155.2472217
+    },
+    {
+      "from_workshop": "成品储存区",
+      "to_workshop": "公用工程区",
+      "resource_type": "personnel_manager",
+      "amount": 1,
+      "iteration": 69,
+      "timestamp": 1744798155.2492225
+    },
+    {
+      "from_workshop": "反应器区",
+      "to_workshop": "公用工程区",
+      "resource_type": "personnel_operator",
+      "amount": 1,
+      "iteration": 69,
+      "timestamp": 1744798155.2492225
+    },
+    {
+      "from_workshop": "反应器区",
+      "to_workshop": "成品储存区",
+      "resource_type": "materials",
+      "amount": 0.05,
+      "iteration": 69,
+      "timestamp": 1744798155.2502215
+    },
+    {
+      "from_workshop": "反应器区",
+      "to_workshop": "原料储存区",
+      "resource_type": "personnel_manager",
+      "amount": 0,
+      "iteration": 70,
+      "timestamp": 1744798155.251726
+    },
+    {
+      "from_workshop": "反应器区",
+      "to_workshop": "成品储存区",
+      "resource_type": "materials",
+      "amount": 0.05,
+      "iteration": 70,
+      "timestamp": 1744798155.251726
+    },
+    {
+      "from_workshop": "原料储存区",
+      "to_workshop": "公用工程区",
+      "resource_type": "materials_raw",
+      "amount": 0.05,
+      "iteration": 70,
+      "timestamp": 1744798155.251726
+    },
+    {
+      "from_workshop": "分离提纯区",
+      "to_workshop": "成品储存区",
+      "resource_type": "materials_storage",
+      "amount": 0.05,
+      "iteration": 70,
+      "timestamp": 1744798155.252727
+    },
+    {
+      "from_workshop": "分离提纯区",
+      "to_workshop": "公用工程区",
+      "resource_type": "personnel_operator",
+      "amount": 0,
+      "iteration": 71,
+      "timestamp": 1744798155.253727
+    },
+    {
+      "from_workshop": "原料储存区",
+      "to_workshop": "成品储存区",
+      "resource_type": "personnel_manager",
+      "amount": 0,
+      "iteration": 72,
+      "timestamp": 1744798155.2557273
+    },
+    {
+      "from_workshop": "公用工程区",
+      "to_workshop": "反应器区",
+      "resource_type": "personnel_operator",
+      "amount": 1,
+      "iteration": 72,
+      "timestamp": 1744798155.2557273
+    },
+    {
+      "from_workshop": "成品储存区",
+      "to_workshop": "公用工程区",
+      "resource_type": "materials",
+      "amount": 0.05,
+      "iteration": 73,
+      "timestamp": 1744798155.258727
+    },
+    {
+      "from_workshop": "成品储存区",
+      "to_workshop": "公用工程区",
+      "resource_type": "materials_catalyst",
+      "amount": 0.05,
+      "iteration": 73,
+      "timestamp": 1744798155.258727
+    },
+    {
+      "from_workshop": "公用工程区",
+      "to_workshop": "分离提纯区",
+      "resource_type": "personnel_manager",
+      "amount": 1,
+      "iteration": 74,
+      "timestamp": 1744798155.260727
+    },
+    {
+      "from_workshop": "公用工程区",
+      "to_workshop": "分离提纯区",
+      "resource_type": "materials",
+      "amount": 0.05,
+      "iteration": 74,
+      "timestamp": 1744798155.261727
+    },
+    {
+      "from_workshop": "原料储存区",
+      "to_workshop": "反应器区",
+      "resource_type": "materials_raw",
+      "amount": 0.05,
+      "iteration": 74,
+      "timestamp": 1744798155.261727
+    },
+    {
+      "from_workshop": "公用工程区",
+      "to_workshop": "原料储存区",
+      "resource_type": "materials_storage",
+      "amount": 0.05,
+      "iteration": 74,
+      "timestamp": 1744798155.261727
+    },
+    {
+      "from_workshop": "成品储存区",
+      "to_workshop": "公用工程区",
+      "resource_type": "personnel",
+      "amount": 1,
+      "iteration": 75,
+      "timestamp": 1744798155.2627275
+    },
+    {
+      "from_workshop": "成品储存区",
+      "to_workshop": "原料储存区",
+      "resource_type": "materials_storage",
+      "amount": 0.05,
+      "iteration": 75,
+      "timestamp": 1744798155.2637272
+    },
+    {
+      "from_workshop": "反应器区",
+      "to_workshop": "原料储存区",
+      "resource_type": "materials_catalyst",
+      "amount": 0.05,
+      "iteration": 76,
+      "timestamp": 1744798155.265727
+    },
+    {
+      "from_workshop": "原料储存区",
+      "to_workshop": "公用工程区",
+      "resource_type": "materials_storage",
+      "amount": 0.05,
+      "iteration": 76,
+      "timestamp": 1744798155.265727
+    },
+    {
+      "from_workshop": "分离提纯区",
+      "to_workshop": "反应器区",
+      "resource_type": "personnel_manager",
+      "amount": 1,
+      "iteration": 77,
+      "timestamp": 1744798155.2677271
+    },
+    {
+      "from_workshop": "公用工程区",
+      "to_workshop": "分离提纯区",
+      "resource_type": "materials_raw",
+      "amount": 0.05,
+      "iteration": 77,
+      "timestamp": 1744798155.2677271
+    },
+    {
+      "from_workshop": "分离提纯区",
+      "to_workshop": "公用工程区",
+      "resource_type": "materials_raw",
+      "amount": 0.05,
+      "iteration": 78,
+      "timestamp": 1744798155.269727
+    },
+    {
+      "from_workshop": "原料储存区",
+      "to_workshop": "公用工程区",
+      "resource_type": "materials_storage",
+      "amount": 0.05,
+      "iteration": 78,
+      "timestamp": 1744798155.2707274
+    }
+  ],
+  "resource_flow_summary": {
+    "personnel": {
+      "分离提纯区_to_反应器区": 1.0,
+      "公用工程区_to_反应器区": 0.0,
+      "反应器区_to_原料储存区": 1.0,
+      "成品储存区_to_公用工程区": 1.0,
+      "原料储存区_to_分离提纯区": 1.0,
+      "反应器区_to_成品储存区": 1.0
+    },
+    "personnel_technician": {
+      "反应器区_to_公用工程区": 0.0,
+      "公用工程区_to_原料储存区": 0.0,
+      "分离提纯区_to_原料储存区": 0.0,
+      "成品储存区_to_公用工程区": 0.0
+    },
+    "personnel_maintenance": {
+      "公用工程区_to_分离提纯区": 0.0,
+      "原料储存区_to_反应器区": 1.0,
+      "成品储存区_to_公用工程区": 0.0,
+      "分离提纯区_to_反应器区": 2.0,
+      "公用工程区_to_原料储存区": 0.0,
+      "原料储存区_to_公用工程区": 0.0,
+      "反应器区_to_原料储存区": 1.0,
+      "反应器区_to_分离提纯区": 2.0
+    },
+    "personnel_manager": {
+      "成品储存区_to_公用工程区": 2.0,
+      "分离提纯区_to_原料储存区": 0.0,
+      "原料储存区_to_成品储存区": 3.0,
+      "成品储存区_to_分离提纯区": 1.0,
+      "反应器区_to_公用工程区": 0.0,
+      "分离提纯区_to_反应器区": 3.0,
+      "反应器区_to_原料储存区": 2.0,
+      "公用工程区_to_分离提纯区": 2.0,
+      "公用工程区_to_反应器区": 0.0
+    },
+    "personnel_operator": {
+      "原料储存区_to_成品储存区": 1.0,
+      "公用工程区_to_反应器区": 1.0,
+      "分离提纯区_to_反应器区": 1.0,
+      "反应器区_to_公用工程区": 2.0,
+      "公用工程区_to_原料储存区": 1.0,
+      "成品储存区_to_反应器区": 0.0,
+      "反应器区_to_分离提纯区": 0.0,
+      "成品储存区_to_分离提纯区": 1.0,
+      "公用工程区_to_分离提纯区": 0.0,
+      "分离提纯区_to_公用工程区": 0.0
+    },
+    "personnel_safety": {
+      "成品储存区_to_反应器区": 0.0,
+      "原料储存区_to_公用工程区": 1.0,
+      "公用工程区_to_成品储存区": 0.0,
+      "反应器区_to_公用工程区": 2.0,
+      "分离提纯区_to_公用工程区": 0.0,
+      "公用工程区_to_反应器区": 2.0,
+      "反应器区_to_原料储存区": 0.0,
+      "成品储存区_to_原料储存区": 0.0
+    },
+    "materials": {
+      "原料储存区_to_成品储存区": 0.15000000000000002,
+      "公用工程区_to_原料储存区": 0.05,
+      "原料储存区_to_分离提纯区": 0.1,
+      "公用工程区_to_成品储存区": 0.44999999999999996,
+      "原料储存区_to_反应器区": 0.05,
+      "反应器区_to_成品储存区": 0.3,
+      "公用工程区_to_分离提纯区": 0.1,
+      "成品储存区_to_公用工程区": 0.44999999999999996,
+      "分离提纯区_to_反应器区": 0.05
+    },
+    "materials_raw": {
+      "公用工程区_to_分离提纯区": 0.7000000000000001,
+      "分离提纯区_to_公用工程区": 0.6,
+      "原料储存区_to_成品储存区": 0.2,
+      "分离提纯区_to_原料储存区": 0.5499999999999999,
+      "反应器区_to_分离提纯区": 0.35,
+      "成品储存区_to_分离提纯区": 0.05,
+      "成品储存区_to_公用工程区": 0.1,
+      "原料储存区_to_反应器区": 0.3,
+      "成品储存区_to_原料储存区": 0.35,
+      "反应器区_to_成品储存区": 0.05,
+      "原料储存区_to_公用工程区": 0.1,
+      "分离提纯区_to_成品储存区": 0.1,
+      "公用工程区_to_反应器区": 0.05
+    },
+    "materials_catalyst": {
+      "原料储存区_to_成品储存区": 0.3,
+      "反应器区_to_原料储存区": 0.39999999999999997,
+      "原料储存区_to_反应器区": 0.49999999999999994,
+      "成品储存区_to_公用工程区": 0.39999999999999997,
+      "分离提纯区_to_原料储存区": 0.05,
+      "反应器区_to_公用工程区": 0.3,
+      "反应器区_to_成品储存区": 0.05,
+      "成品储存区_to_原料储存区": 0.05,
+      "公用工程区_to_反应器区": 0.05
+    },
+    "materials_storage": {
+      "成品储存区_to_原料储存区": 0.3,
+      "反应器区_to_成品储存区": 0.05,
+      "公用工程区_to_原料储存区": 0.2,
+      "原料储存区_to_公用工程区": 0.6,
+      "分离提纯区_to_原料储存区": 0.05,
+      "反应器区_to_公用工程区": 0.05,
+      "原料储存区_to_反应器区": 0.05,
+      "反应器区_to_分离提纯区": 0.05,
+      "分离提纯区_to_成品储存区": 0.2,
+      "原料储存区_to_分离提纯区": 0.05,
+      "成品储存区_to_分离提纯区": 0.05,
+      "分离提纯区_to_反应器区": 0.05,
+      "反应器区_to_原料储存区": 0.05
+    },
+    "electricity": {
+      "原料储存区_to_分离提纯区": 0.05,
+      "原料储存区_to_成品储存区": 0.15000000000000002,
+      "分离提纯区_to_公用工程区": 0.2,
+      "原料储存区_to_公用工程区": 0.15000000000000002,
+      "成品储存区_to_公用工程区": 0.35,
+      "分离提纯区_to_原料储存区": 0.05,
+      "反应器区_to_分离提纯区": 0.15000000000000002,
+      "分离提纯区_to_反应器区": 0.05,
+      "分离提纯区_to_成品储存区": 0.1,
+      "反应器区_to_成品储存区": 0.05,
+      "成品储存区_to_分离提纯区": 0.05,
+      "反应器区_to_公用工程区": 0.05
+    }
+  }
+}

@@ -2,28 +2,36 @@ import os
 from fastapi import APIRouter, BackgroundTasks, HTTPException, Query, Depends
 from typing import Any, Dict, Optional, List, Tuple
 
-from app.models.algorithm1.predictions_arima_auto import PredictionsArimaAuto
+from app.models.algorithm1.predictions_timemixer_auto import PredictionsTimeMixerAuto
 from app.schemas.algorithm1.algorithm1_result import (
     PaginationInfo,
-    PaginatedPredictionsArimaAutos
+    PaginatedPredictionsTimeMixerAutos
 )
 from app.utils.csv_builder import CSVBuilder
 from fastapi.responses import StreamingResponse
 
 from app.utils.json_importer import import_json_to_model
+from fastapi.responses import FileResponse
+from datetime import datetime
+from datetime import timedelta
 
 router = APIRouter()
 
 # 查询结果的通用函数，支持分页
 
 
+# 在模块顶部添加
+_MIN_TIMESTAMP = None
+
+
 async def get_predictions_with_filters(
     region: Optional[str] = None,
     point_id: Optional[str] = None,
+    timestep: int = 0,
     skip: int = 0,
     limit: int = 100,
     get_all: bool = False
-) -> Tuple[List[PredictionsArimaAuto], int]:
+) -> Tuple[List[PredictionsTimeMixerAuto], int]:
     """
     根据过滤条件获取预测结果，支持分页或获取全部数据
 
@@ -35,46 +43,58 @@ async def get_predictions_with_filters(
         get_all: 是否返回所有符合条件的数据，为True时忽略skip和limit参数
 
     返回:
-        Tuple[List[PredictionsArimaAuto], int]: (结果列表, 总记录数)
+        Tuple[List[PredictionsTimeMixerAuto], int]: (结果列表, 总记录数)
     """
+    global _MIN_TIMESTAMP
     # 构建查询条件
     query_filters = {}
+    # 如果未缓存则查询数据库
+    if _MIN_TIMESTAMP is None:
+        min_timestamp_record = await PredictionsTimeMixerAuto.all().order_by("timestamp").first()
+        _MIN_TIMESTAMP = min_timestamp_record.timestamp if min_timestamp_record else datetime.utcnow()
+
+    # 计算时间戳（基础时间 + timestep*10秒）
+    calculated_timestamp = _MIN_TIMESTAMP + timedelta(seconds=timestep*10)
+    query_filters["timestamp"] = calculated_timestamp
+
     if region:
         query_filters["region"] = region
     if point_id:
         query_filters["point_id"] = point_id
 
     # 获取总记录数
-    total_count = await PredictionsArimaAuto.filter(**query_filters).count()
+    total_count = await PredictionsTimeMixerAuto.filter(**query_filters).count()
 
     # 根据get_all参数决定是否应用分页
     if get_all:
-        results = await PredictionsArimaAuto.filter(**query_filters).order_by("timestamp").all()
+        results = await PredictionsTimeMixerAuto.filter(**query_filters).order_by("timestamp").all()
     else:
-        results = await PredictionsArimaAuto.filter(**query_filters).order_by("timestamp").offset(skip).limit(limit)
+        results = await PredictionsTimeMixerAuto.filter(**query_filters).order_by("timestamp").offset(skip).limit(limit)
 
     return results, total_count
 
 
 @router.get(
-    "/arima",
-    response_model=PaginatedPredictionsArimaAutos,
-    summary="获取ARIMA预测结果",
-    description="获取ARIMA自动预测结果，支持按区域过滤和分页"
+    "/TimeMixer",
+    response_model=PaginatedPredictionsTimeMixerAutos,
+    summary="获取TimeMixer预测结果",
+    description="获取TimeMixer自动预测结果，支持按区域过滤和分页"
 )
-async def get_arima_predictions(
+async def get_TimeMixer_predictions(
     region: Optional[str] = Query(None, description="区域代码，不提供则返回所有区域结果"),
     point_id: Optional[str] = Query(None, description="可选的监测点ID"),
+    timestep: int = Query(0, ge=0, le=29, description="时间步长"),
     skip: int = Query(0, ge=0, description="跳过的记录数"),
     limit: int = Query(100, ge=1, le=500, description="返回的最大记录数"),
     get_all: bool = Query(False, description="是否返回所有符合条件的数据，为true时忽略分页参数"),
 ):
     """
-    获取ARIMA自动预测结果，支持按区域过滤和分页
+    获取TimeMixer自动预测结果，支持按区域过滤和分页
 
     参数:
     - **region**: 可选，区域代码，不提供则返回所有区域结果
     - **point_id**: 可选，特定监测点ID
+    - **timestep**: 时间步长，默认为0，表示从起始时间戳往后的时间步，比如起始时间2023-12-02 12:12:12,时间步为1，预测的步长为10，则现在的时间为2023-12-02 12:22:12
     - **skip**: 分页偏移量，默认为0
     - **limit**: 每页记录数，默认100，最大500
     - **get_all**: 设置为true时返回所有符合条件的数据，忽略分页参数
@@ -84,7 +104,7 @@ async def get_arima_predictions(
     """
     # 获取结果和总数
     results, total_count = await get_predictions_with_filters(
-        region, point_id,  skip, limit, get_all
+        region, point_id, timestep, skip, limit, get_all
     )
 
     # 构建分页信息
@@ -97,31 +117,33 @@ async def get_arima_predictions(
 
     # 如果没有找到数据，返回空列表
     if not results:
-        return PaginatedPredictionsArimaAutos(
+        return PaginatedPredictionsTimeMixerAutos(
             pagination=pagination,
             data=[]
         )
 
-    return PaginatedPredictionsArimaAutos(
+    return PaginatedPredictionsTimeMixerAutos(
         pagination=pagination,
         data=results
     )
 
 
-@router.get("/arima/results/download-csv", response_class=StreamingResponse)
-async def download_arima_predictions_csv(
+@router.get("/TimeMixer/results/download-csv", response_class=StreamingResponse)
+async def download_TimeMixer_predictions_csv(
     region: Optional[str] = Query(None, description="区域过滤"),
     point_id: Optional[str] = Query(None, description="监测点ID"),
     filename: Optional[str] = Query(None, description="自定义文件名前缀"),
+    timestep: int = Query(0, ge=0, le=29, description="时间步长"),
     localize: bool = Query(False, description="是否使用中文列名"),
 ):
     """
-    下载ARIMA预测结果为CSV格式
+    下载TimeMixer预测结果为CSV格式
 
     参数:
         region: 可选的区域过滤
         point_id: 可选的监测点ID
         filename: 自定义文件名前缀
+        timestep: 时间步长
         localize: 使用中文列名
         start_time: 可选的开始时间
         end_time: 可选的结束时间
@@ -134,6 +156,17 @@ async def download_arima_predictions_csv(
         query_filters = {}
         filter_desc = []
 
+        global _MIN_TIMESTAMP
+
+        # 如果未缓存则查询数据库
+        if _MIN_TIMESTAMP is None:
+            min_timestamp_record = await PredictionsTimeMixerAuto.all().order_by("timestamp").first()
+            _MIN_TIMESTAMP = min_timestamp_record.timestamp if min_timestamp_record else datetime.utcnow()
+
+        # 计算时间戳（基础时间 + timestep*10秒）
+        calculated_timestamp = _MIN_TIMESTAMP + timedelta(seconds=timestep*10)
+        query_filters["timestamp"] = calculated_timestamp
+
         if region:
             query_filters["region"] = region
             filter_desc.append(f"区域={region}")
@@ -143,7 +176,7 @@ async def download_arima_predictions_csv(
             filter_desc.append(f"监测点={point_id}")
 
         # 2. 查询所有符合条件的数据
-        results = await PredictionsArimaAuto.filter(**query_filters).order_by("timestamp").all()
+        results = await PredictionsTimeMixerAuto.filter(**query_filters).order_by("timestamp").all()
 
         # 3. 判断是否有数据
         if not results:
@@ -154,7 +187,7 @@ async def download_arima_predictions_csv(
 
         # 4. 生成文件名前缀
         if not filename:
-            parts = ["arima"]
+            parts = ["TimeMixer"]
 
             if region:
                 parts.append(f"region_{region}")
@@ -194,20 +227,20 @@ async def download_arima_predictions_csv(
         # 处理未预期的错误
         return CSVBuilder.create_error_response(
             message=f"服务器错误: {str(e)}",
-            filename_prefix="error_arima"
+            filename_prefix="error_TimeMixer"
         )
 
 
-@router.post("/arima/import-json-results", response_model=Dict[str, Any])
+@router.post("/TimeMixer/import-json-results", response_model=Dict[str, Any])
 async def import_json_predictions(
     background_tasks: BackgroundTasks,
-    json_name: str = Query("predictions_arima.json",
+    json_name: str = Query("predictions_TimeMixer_auto.json",
                            description="JSON文件名，位于app/data/algorithm1文件夹下")
 ):
     """
-    导入ARIMA预测结果的JSON数据
+    导入TimeMixer预测结果的JSON数据
 
-    将指定的JSON文件中的数据导入到predictions_arima_auto表
+    将指定的JSON文件中的数据导入到predictions_TimeMixer_auto表
 
     参数:
     - **json_name**: JSON文件名，位于app/data/algorithm1文件夹下
@@ -240,13 +273,13 @@ async def import_json_predictions(
     background_tasks.add_task(
         import_json_to_model,
         json_path=json_path,
-        model_class=PredictionsArimaAuto,
+        model_class=PredictionsTimeMixerAuto,
         batch_size=100,
         encoding='utf-8'
     )
 
     return {
-        "message": "已开始导入ARIMA预测数据",
+        "message": "已开始导入TimeMixer预测数据",
         "status": "processing",
         "json_path": json_path
     }
@@ -254,19 +287,19 @@ async def import_json_predictions(
 # ? 可能会用到的辅助接口
 
 
-@router.get("/arima/points",
+@router.get("/TimeMixer/points",
             summary="获取监测点列表",
-            description="获取所有可用的ARIMA预测监测点ID列表")
-async def get_arima_points_list():
+            description="获取所有可用的TimeMixer预测监测点ID列表")
+async def get_TimeMixer_points_list():
     """
-    获取所有可用的ARIMA预测监测点ID列表
+    获取所有可用的TimeMixer预测监测点ID列表
 
     返回：
     - **points**: 监测点ID列表
     - **count**: 监测点数量
     """
     # 查询所有不同的监测点ID
-    points = await PredictionsArimaAuto.all().distinct().values_list('point_id', flat=True)
+    points = await PredictionsTimeMixerAuto.all().distinct().values_list('point_id', flat=True)
     # 对点位进行排序
     sorted_points = sorted(points)
 
@@ -276,19 +309,19 @@ async def get_arima_points_list():
     }
 
 
-@router.get("/arima/regions",
+@router.get("/TimeMixer/regions",
             summary="获取区域列表",
-            description="获取所有可用的ARIMA预测区域列表")
-async def get_arima_regions_list():
+            description="获取所有可用的TimeMixer预测区域列表")
+async def get_TimeMixer_regions_list():
     """
-    获取所有可用的ARIMA预测区域列表
+    获取所有可用的TimeMixer预测区域列表
 
     返回：
     - **regions**: 区域列表
     - **count**: 区域数量
     """
     # 查询所有不同的区域
-    regions = await PredictionsArimaAuto.all().distinct().values_list('region', flat=True)
+    regions = await PredictionsTimeMixerAuto.all().distinct().values_list('region', flat=True)
     # 过滤None值并排序
     sorted_regions = sorted([r for r in regions if r])
 
@@ -296,3 +329,35 @@ async def get_arima_regions_list():
         "regions": sorted_regions,
         "count": len(sorted_regions)
     }
+
+
+@router.get("/TimeMixer/prediction-chart")
+async def get_prediction_chart(
+    point_id: str = Query(..., description="监测点ID"),
+    timestamp: str = Query(..., description="时间戳，格式：YYYY-MM-DD HH:mm:ss")
+):
+    """获取预测图表"""
+    try:
+        # 构建图片路径
+        base_path = "app/data/algorithm1/TimeMixer"
+        # Format timestamp as part of filename (e.g., RMS001_2025-03-02.png)
+        image_name = "sensor_data.png"
+        image_path = os.path.join(base_path, point_id, image_name)
+
+        if not os.path.exists(image_path):
+            raise HTTPException(
+                status_code=404,
+                detail=f"图表不存在: {image_name}"
+            )
+
+        return FileResponse(
+            image_path,
+            media_type="image/png",
+            filename=image_name
+        )
+
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"获取图表失败: {str(e)}"
+        )

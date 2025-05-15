@@ -1,0 +1,336 @@
+{
+  "personnel": {
+    "title": "人员分配",
+    "data": [
+      {
+        "name": "原料储存区",
+        "value": 120,
+        "color": "#4CAF50"
+      },
+      {
+        "name": "反应器区",
+        "value": 85,
+        "color": "#2196F3"
+      },
+      {
+        "name": "分离提纯区",
+        "value": 65,
+        "color": "#FFC107"
+      },
+      {
+        "name": "成品储存区",
+        "value": 40,
+        "color": "#9C27B0"
+      },
+      {
+        "name": "公用工程区",
+        "value": 30,
+        "color": "#FF5722"
+      }
+    ],
+    "subtypes": {
+      "technician": {
+        "title": "技术员",
+        "data": [
+          {
+            "name": "原料储存区",
+            "value": 30,
+            "color": "#4CAF50"
+          },
+          {
+            "name": "反应器区",
+            "value": 25,
+            "color": "#2196F3"
+          },
+          {
+            "name": "分离提纯区",
+            "value": 15,
+            "color": "#FFC107"
+          },
+          {
+            "name": "成品储存区",
+            "value": 15,
+            "color": "#9C27B0"
+          },
+          {
+            "name": "公用工程区",
+            "value": 5,
+            "color": "#FF5722"
+          }
+        ]
+      },
+      "manager": {
+        "title": "管理员",
+        "data": [
+          {
+            "name": "原料储存区",
+            "value": 15,
+            "color": "#4CAF50"
+          },
+          {
+            "name": "反应器区",
+            "value": 10,
+            "color": "#2196F3"
+          },
+          {
+            "name": "分离提纯区",
+            "value": 10,
+            "color": "#FFC107"
+          },
+          {
+            "name": "成品储存区",
+            "value": 5,
+            "color": "#9C27B0"
+          },
+          {
+            "name": "公用工程区",
+            "value": 5,
+            "color": "#FF5722"
+          }
+        ]
+      },
+      "maintenance": {
+        "title": "维修员",
+        "data": [
+          {
+            "name": "原料储存区",
+            "value": 25,
+            "color": "#4CAF50"
+          },
+          {
+            "name": "反应器区",
+            "value": 20,
+            "color": "#2196F3"
+          },
+          {
+            "name": "分离提纯区",
+            "value": 10,
+            "color": "#FFC107"
+          },
+          {
+            "name": "成品储存区",
+            "value": 5,
+            "color": "#9C27B0"
+          },
+          {
+            "name": "公用工程区",
+            "value": 5,
+            "color": "#FF5722"
+          }
+        ]
+      },
+      "operator": {
+        "title": "操作员",
+        "data": [
+          {
+            "name": "原料储存区",
+            "value": 40,
+            "color": "#4CAF50"
+          },
+          {
+            "name": "反应器区",
+            "value": 25,
+            "color": "#2196F3"
+          },
+          {
+            "name": "分离提纯区",
+            "value": 25,
+            "color": "#FFC107"
+          },
+          {
+            "name": "成品储存区",
+            "value": 10,
+            "color": "#9C27B0"
+          },
+          {
+            "name": "公用工程区",
+            "value": 10,
+            "color": "#FF5722"
+          }
+        ]
+      },
+      "safety": {
+        "title": "安全员",
+        "data": [
+          {
+            "name": "原料储存区",
+            "value": 10,
+            "color": "#4CAF50"
+          },
+          {
+            "name": "反应器区",
+            "value": 5,
+            "color": "#2196F3"
+          },
+          {
+            "name": "分离提纯区",
+            "value": 5,
+            "color": "#FFC107"
+          },
+          {
+            "name": "成品储存区",
+            "value": 5,
+            "color": "#9C27B0"
+          },
+          {
+            "name": "公用工程区",
+            "value": 5,
+            "color": "#FF5722"
+          }
+        ]
+      }
+    }
+  },
+  "materials": {
+    "title": "物料分配",
+    "data": [
+      {
+        "name": "原料储存区",
+        "value": 500,
+        "color": "#4CAF50"
+      },
+      {
+        "name": "反应器区",
+        "value": 350,
+        "color": "#2196F3"
+      },
+      {
+        "name": "分离提纯区",
+        "value": 280,
+        "color": "#FFC107"
+      },
+      {
+        "name": "成品储存区",
+        "value": 150,
+        "color": "#9C27B0"
+      },
+      {
+        "name": "公用工程区",
+        "value": 420,
+        "color": "#FF5722"
+      }
+    ],
+    "subtypes": {
+      "raw_material": {
+        "title": "原料",
+        "data": [
+          {
+            "name": "原料储存区",
+            "value": 300,
+            "color": "#4CAF50"
+          },
+          {
+            "name": "反应器区",
+            "value": 200,
+            "color": "#2196F3"
+          },
+          {
+            "name": "分离提纯区",
+            "value": 100,
+            "color": "#FFC107"
+          },
+          {
+            "name": "成品储存区",
+            "value": 50,
+            "color": "#9C27B0"
+          },
+          {
+            "name": "公用工程区",
+            "value": 250,
+            "color": "#FF5722"
+          }
+        ]
+      },
+      "catalyst": {
+        "title": "催化剂",
+        "data": [
+          {
+            "name": "原料储存区",
+            "value": 150,
+            "color": "#4CAF50"
+          },
+          {
+            "name": "反应器区",
+            "value": 100,
+            "color": "#2196F3"
+          },
+          {
+            "name": "分离提纯区",
+            "value": 30,
+            "color": "#FFC107"
+          },
+          {
+            "name": "成品储存区",
+            "value": 50,
+            "color": "#9C27B0"
+          },
+          {
+            "name": "公用工程区",
+            "value": 70,
+            "color": "#FF5722"
+          }
+        ]
+      },
+      "storage": {
+        "title": "存储容量",
+        "data": [
+          {
+            "name": "原料储存区",
+            "value": 50,
+            "color": "#4CAF50"
+          },
+          {
+            "name": "反应器区",
+            "value": 50,
+            "color": "#2196F3"
+          },
+          {
+            "name": "分离提纯区",
+            "value": 150,
+            "color": "#FFC107"
+          },
+          {
+            "name": "成品储存区",
+            "value": 50,
+            "color": "#9C27B0"
+          },
+          {
+            "name": "公用工程区",
+            "value": 100,
+            "color": "#FF5722"
+          }
+        ]
+      }
+    }
+  },
+  "electricity": {
+    "title": "电力分配",
+    "data": [
+      {
+        "name": "原料储存区",
+        "value": 800,
+        "color": "#4CAF50"
+      },
+      {
+        "name": "反应器区",
+        "value": 650,
+        "color": "#2196F3"
+      },
+      {
+        "name": "分离提纯区",
+        "value": 450,
+        "color": "#FFC107"
+      },
+      {
+        "name": "成品储存区",
+        "value": 300,
+        "color": "#9C27B0"
+      },
+      {
+        "name": "公用工程区",
+        "value": 400,
+        "color": "#FF5722"
+      }
+    ]
+  }
+}

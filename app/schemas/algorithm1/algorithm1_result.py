@@ -3,7 +3,7 @@ from datetime import datetime
 from pydantic import BaseModel
 
 
-class PredictionsArimaAutoBase(BaseModel):
+class PredictionsTimeMixerAutoBase(BaseModel):
     timestamp: datetime
     point_id: str
     region: str
@@ -17,7 +17,7 @@ class PredictionsArimaAutoBase(BaseModel):
     gas_concentration: float
 
 
-class PredictionsArimaAutoResponse(PredictionsArimaAutoBase):
+class PredictionsTimeMixerAutoResponse(PredictionsTimeMixerAutoBase):
 
     class Config:
         from_attributes = True
@@ -33,7 +33,7 @@ class PaginationInfo(BaseModel):
 
 
 # 带分页的响应模型
-class PaginatedPredictionsArimaAutos(BaseModel):
+class PaginatedPredictionsTimeMixerAutos(BaseModel):
     """带分页信息的结果列表响应模型"""
     pagination: PaginationInfo
-    data: list[PredictionsArimaAutoResponse]
+    data: list[PredictionsTimeMixerAutoResponse]
