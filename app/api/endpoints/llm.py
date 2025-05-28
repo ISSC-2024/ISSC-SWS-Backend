@@ -1,7 +1,8 @@
-from fastapi import APIRouter, Query, Path
+from fastapi import APIRouter, Query, Path, Request, Response, status
 from app.utils.httpx_client import HttpxClient
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Union
 from app.core.config import Config
+from fastapi.responses import StreamingResponse, RedirectResponse
 
 router = APIRouter()
 
@@ -64,3 +65,12 @@ async def query_model(
         return {"error": f"模型 '{model_endpoint}' 不存在", "valid_models": valid_endpoints}
 
     return await query_llm(model_endpoint, user_question)
+
+
+@router.post("/eval")
+async def redirect_to_eval_llm():
+    """
+    重定向到专家评估LLM接口
+    """
+    # 直接重定向到eval-llm接口
+    return RedirectResponse(url=f"{Config.LLM_APP_URL}/eval-llm", status_code=status.HTTP_307_TEMPORARY_REDIRECT)
