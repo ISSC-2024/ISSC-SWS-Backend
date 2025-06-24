@@ -2,10 +2,10 @@ import os
 from fastapi import APIRouter, BackgroundTasks, HTTPException, Query, Depends
 from typing import Any, Dict, Optional, List, Tuple
 
-from app.models.algorithm1.predictions_timemixer_auto import PredictionsTimeMixerAuto
-from app.schemas.algorithm1.algorithm1_result import (
+from app.models.algorithm11.predictions_timemixer_auto_iron import PredictionsTimeMixerAutoIron
+from app.schemas.algorithm11.algorithm11_result import (
     PaginationInfo,
-    PaginatedPredictionsTimeMixerAutos
+    PaginatedPredictionsTimeMixerAutoIrons
 )
 from app.utils.csv_builder import CSVBuilder
 from fastapi.responses import StreamingResponse
@@ -26,63 +26,58 @@ _MIN_TIMESTAMP = None
 
 async def get_predictions_with_filters(
     region: Optional[str] = None,
-    point_id: Optional[str] = None,
     timestep: int = 0,
     skip: int = 0,
     limit: int = 100,
     get_all: bool = False
-) -> Tuple[List[PredictionsTimeMixerAuto], int]:
+) -> Tuple[List[PredictionsTimeMixerAutoIron], int]:
     """
     根据过滤条件获取预测结果，支持分页或获取全部数据
 
     参数:
         region: 可选的区域过滤条件
-        point_id: 可选的监测点ID过滤条件
         skip: 跳过的记录数
         limit: 返回的最大记录数
         get_all: 是否返回所有符合条件的数据，为True时忽略skip和limit参数
 
     返回:
-        Tuple[List[PredictionsTimeMixerAuto], int]: (结果列表, 总记录数)
+        Tuple[List[PredictionsTimeMixerAutoIron], int]: (结果列表, 总记录数)
     """
     global _MIN_TIMESTAMP
     # 构建查询条件
     query_filters = {}
     # 如果未缓存则查询数据库
     if _MIN_TIMESTAMP is None:
-        min_timestamp_record = await PredictionsTimeMixerAuto.all().order_by("timestamp").first()
+        min_timestamp_record = await PredictionsTimeMixerAutoIron.all().order_by("timestamp").first()
         _MIN_TIMESTAMP = min_timestamp_record.timestamp if min_timestamp_record else datetime.utcnow()
 
     # 计算时间戳（基础时间 + timestep*10秒）
-    calculated_timestamp = _MIN_TIMESTAMP + timedelta(seconds=timestep*10)
+    calculated_timestamp = _MIN_TIMESTAMP + timedelta(seconds=timestep*30)
     query_filters["timestamp"] = calculated_timestamp
 
     if region:
         query_filters["region"] = region
-    if point_id:
-        query_filters["point_id"] = point_id
 
     # 获取总记录数
-    total_count = await PredictionsTimeMixerAuto.filter(**query_filters).count()
+    total_count = await PredictionsTimeMixerAutoIron.filter(**query_filters).count()
 
     # 根据get_all参数决定是否应用分页
     if get_all:
-        results = await PredictionsTimeMixerAuto.filter(**query_filters).order_by("timestamp").all()
+        results = await PredictionsTimeMixerAutoIron.filter(**query_filters).order_by("timestamp").all()
     else:
-        results = await PredictionsTimeMixerAuto.filter(**query_filters).order_by("timestamp").offset(skip).limit(limit)
+        results = await PredictionsTimeMixerAutoIron.filter(**query_filters).order_by("timestamp").offset(skip).limit(limit)
 
     return results, total_count
 
 
 @router.get(
     "/TimeMixer",
-    response_model=PaginatedPredictionsTimeMixerAutos,
+    response_model=PaginatedPredictionsTimeMixerAutoIrons,
     summary="获取TimeMixer预测结果",
     description="获取TimeMixer自动预测结果，支持按区域过滤和分页"
 )
 async def get_TimeMixer_predictions(
     region: Optional[str] = Query(None, description="区域代码，不提供则返回所有区域结果"),
-    point_id: Optional[str] = Query(None, description="可选的监测点ID"),
     timestep: int = Query(0, ge=0, le=29, description="时间步长"),
     skip: int = Query(0, ge=0, description="跳过的记录数"),
     limit: int = Query(100, ge=1, le=500, description="返回的最大记录数"),
@@ -93,7 +88,6 @@ async def get_TimeMixer_predictions(
 
     参数:
     - **region**: 可选，区域代码，不提供则返回所有区域结果
-    - **point_id**: 可选，特定监测点ID
     - **timestep**: 时间步长，默认为0，表示从起始时间戳往后的时间步，比如起始时间2023-12-02 12:12:12,时间步为1，预测的步长为10，则现在的时间为2023-12-02 12:22:12
     - **skip**: 分页偏移量，默认为0
     - **limit**: 每页记录数，默认100，最大500
@@ -104,7 +98,7 @@ async def get_TimeMixer_predictions(
     """
     # 获取结果和总数
     results, total_count = await get_predictions_with_filters(
-        region, point_id, timestep, skip, limit, get_all
+        region,  timestep, skip, limit, get_all
     )
 
     # 构建分页信息
@@ -117,12 +111,12 @@ async def get_TimeMixer_predictions(
 
     # 如果没有找到数据，返回空列表
     if not results:
-        return PaginatedPredictionsTimeMixerAutos(
+        return PaginatedPredictionsTimeMixerAutoIrons(
             pagination=pagination,
             data=[]
         )
 
-    return PaginatedPredictionsTimeMixerAutos(
+    return PaginatedPredictionsTimeMixerAutoIrons(
         pagination=pagination,
         data=results
     )
@@ -131,7 +125,6 @@ async def get_TimeMixer_predictions(
 @router.get("/TimeMixer/results/download-csv", response_class=StreamingResponse)
 async def download_TimeMixer_predictions_csv(
     region: Optional[str] = Query(None, description="区域过滤"),
-    point_id: Optional[str] = Query(None, description="监测点ID"),
     filename: Optional[str] = Query(None, description="自定义文件名前缀"),
     timestep: int = Query(0, ge=0, le=29, description="时间步长"),
     localize: bool = Query(False, description="是否使用中文列名"),
@@ -141,7 +134,6 @@ async def download_TimeMixer_predictions_csv(
 
     参数:
         region: 可选的区域过滤
-        point_id: 可选的监测点ID
         filename: 自定义文件名前缀
         timestep: 时间步长
         localize: 使用中文列名
@@ -160,7 +152,7 @@ async def download_TimeMixer_predictions_csv(
 
         # 如果未缓存则查询数据库
         if _MIN_TIMESTAMP is None:
-            min_timestamp_record = await PredictionsTimeMixerAuto.all().order_by("timestamp").first()
+            min_timestamp_record = await PredictionsTimeMixerAutoIron.all().order_by("timestamp").first()
             _MIN_TIMESTAMP = min_timestamp_record.timestamp if min_timestamp_record else datetime.utcnow()
 
         # 计算时间戳（基础时间 + timestep*10秒）
@@ -171,12 +163,8 @@ async def download_TimeMixer_predictions_csv(
             query_filters["region"] = region
             filter_desc.append(f"区域={region}")
 
-        if point_id:
-            query_filters["point_id"] = point_id
-            filter_desc.append(f"监测点={point_id}")
-
         # 2. 查询所有符合条件的数据
-        results = await PredictionsTimeMixerAuto.filter(**query_filters).order_by("timestamp").all()
+        results = await PredictionsTimeMixerAutoIron.filter(**query_filters).order_by("timestamp").all()
 
         # 3. 判断是否有数据
         if not results:
@@ -192,9 +180,6 @@ async def download_TimeMixer_predictions_csv(
             if region:
                 parts.append(f"region_{region}")
 
-            if point_id:
-                parts.append(f"point_{point_id}")
-
             file_prefix = "_".join(parts)
         else:
             file_prefix = filename
@@ -204,14 +189,10 @@ async def download_TimeMixer_predictions_csv(
         if localize:
             column_mapping = {
                 'timestamp': '时间戳',
-                'point_id': '监测点ID',
                 'region': '区域',
-                'temperature': '温度',
-                'pressure': '压力',
-                'flow_rate': '流速',
-                'level': '液位',
-                'gas_type': '气体类型',
-                'gas_concentration': '气体浓度'
+                'sensor_type': '传感器类型',
+                'measurement': '测量量',
+                'value': '测量值'
             }
 
         # 6. 构建并返回CSV流式响应
@@ -235,7 +216,7 @@ async def download_TimeMixer_predictions_csv(
 async def import_json_predictions(
     background_tasks: BackgroundTasks,
     json_name: str = Query("predictions_TimeMixer_auto.json",
-                           description="JSON文件名，位于app/data/algorithm1文件夹下")
+                           description="JSON文件名，位于app/data/algorithm11文件夹下")
 ):
     """
     导入TimeMixer预测结果的JSON数据
@@ -243,13 +224,13 @@ async def import_json_predictions(
     将指定的JSON文件中的数据导入到predictions_TimeMixer_auto表
 
     参数:
-    - **json_name**: JSON文件名，位于app/data/algorithm1文件夹下
+    - **json_name**: JSON文件名，位于app/data/algorithm11文件夹下
 
     返回:
     - 导入任务的状态信息
     """
     # 1. 构建JSON文件的完整路径
-    base_path = "app/data/algorithm1/TimeMixer"
+    base_path = "app/data/algorithm11/TimeMixer"
     json_path = os.path.join(base_path, json_name)
 
     # 2. 检查文件夹是否存在，不存在则创建
@@ -264,25 +245,32 @@ async def import_json_predictions(
 
     # 3. 检查JSON文件是否存在
     if not os.path.exists(json_path):
+        # 如果文件不存在，返回更明确的错误信息
         raise HTTPException(
             status_code=404,
-            detail=f"JSON文件不存在: {json_path}"
+            detail=f"JSON文件不存在: {json_path}，请确保文件已上传到正确位置"
         )
 
     # 4. 导入JSON数据(后台任务)
-    background_tasks.add_task(
-        import_json_to_model,
-        json_path=json_path,
-        model_class=PredictionsTimeMixerAuto,
-        batch_size=100,
-        encoding='utf-8'
-    )
+    try:
+        background_tasks.add_task(
+            import_json_to_model,
+            json_path=json_path,
+            model_class=PredictionsTimeMixerAutoIron,
+            batch_size=100,
+            encoding='utf-8'
+        )
 
-    return {
-        "message": "已开始导入TimeMixer预测数据",
-        "status": "processing",
-        "json_path": json_path
-    }
+        return {
+            "message": "已开始导入TimeMixer预测数据",
+            "status": "processing",
+            "json_path": json_path
+        }
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"导入数据失败: {str(e)}"
+        )
 
 # ? 可能会用到的辅助接口
 
@@ -299,7 +287,7 @@ async def get_TimeMixer_points_list():
     - **count**: 监测点数量
     """
     # 查询所有不同的监测点ID
-    points = await PredictionsTimeMixerAuto.all().distinct().values_list('point_id', flat=True)
+    points = await PredictionsTimeMixerAutoIron.all().distinct().values_list('point_id', flat=True)
     # 对点位进行排序
     sorted_points = sorted(points)
 
@@ -321,7 +309,7 @@ async def get_TimeMixer_regions_list():
     - **count**: 区域数量
     """
     # 查询所有不同的区域
-    regions = await PredictionsTimeMixerAuto.all().distinct().values_list('region', flat=True)
+    regions = await PredictionsTimeMixerAutoIron.all().distinct().values_list('region', flat=True)
     # 过滤None值并排序
     sorted_regions = sorted([r for r in regions if r])
 
@@ -339,7 +327,7 @@ async def get_prediction_chart(
     """获取预测图表"""
     try:
         # 构建图片路径
-        base_path = "app/data/algorithm1/TimeMixer"
+        base_path = "app/data/algorithm11/TimeMixer"
         # Format timestamp as part of filename (e.g., RMS001_2025-03-02.png)
         image_name = "sensor_data.png"
         image_path = os.path.join(base_path, point_id, image_name)

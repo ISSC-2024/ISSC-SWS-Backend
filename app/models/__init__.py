@@ -10,3 +10,6 @@ from app.models.algorithm3.algorithm3_config import Algorithm3Config
 from app.models.algorithm3.algorithm3_result import Algorithm3Result
 from app.models.llm.conversation import Conversation
 from app.models.llm.message import Message
+
+
+from app.models.algorithm11.predictions_timemixer_auto_iron import PredictionsTimeMixerAutoIron

@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Request
 from contextlib import asynccontextmanager
 from app.db.tortoise import init_db, close_db
-from app.api.endpoints import algorithm1, algorithm2, algorithm3, algorithm4, conversation, llm
+from app.api.endpoints import algorithm1, algorithm11, algorithm2, algorithm3, algorithm4, conversation, llm
 from fastapi.middleware.cors import CORSMiddleware
 
 
@@ -36,6 +36,9 @@ app.include_router(algorithm4.router,
 app.include_router(llm.router, prefix="/api/llm", tags=["LLM"])
 app.include_router(conversation.router,
                    prefix="/api/conversations", tags=["Conversations"])
+
+app.include_router(algorithm11.router,
+                   prefix="/api/algorithm11", tags=["Algorithm11"])
 
 if __name__ == "__main__":
     import uvicorn
