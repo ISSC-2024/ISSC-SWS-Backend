@@ -7,7 +7,8 @@ load_dotenv()
 class Config:
     DATABASE_URL = os.getenv(
         "DATABASE_URL", "mysql://user:password@localhost:3306/dbname")
-    LLM_APP_URL = os.getenv("LLM_APP_URL", "http://localhost:8001/")
+    LLM_CHEMICAL_URL = os.getenv("LLM_CHEMICAL_URL", "http://localhost:8001/")
+    LLM_IRON_URL = os.getenv("LLM_IRON_URL", "http://localhost:8002/")
 
     SECRET_KEY = os.getenv("SECRET_KEY", "your_secret_key")
     ALGORITHM = os.getenv("ALGORITHM", "HS256")
